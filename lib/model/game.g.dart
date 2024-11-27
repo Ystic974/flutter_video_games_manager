@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'games.dart';
+part of 'game.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -51,54 +51,4 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
       'playtime': instance.playtime,
       'suggestionsCount': instance.suggestionsCount,
       'shortScreenshots': instance.shortScreenshots,
-    };
-
-Rating _$RatingFromJson(Map<String, dynamic> json) => Rating(
-      id: (json['id'] as num).toInt(),
-      title: json['title'] as String,
-      count: (json['count'] as num).toInt(),
-      percent: (json['percent'] as num).toDouble(),
-    );
-
-Map<String, dynamic> _$RatingToJson(Rating instance) => <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-      'count': instance.count,
-      'percent': instance.percent,
-    };
-
-AddedByStatus _$AddedByStatusFromJson(Map<String, dynamic> json) =>
-    AddedByStatus(
-      id: (json['id'] as num).toInt(),
-      title: json['title'] as String,
-      count: (json['count'] as num).toInt(),
-      percent: (json['percent'] as num).toDouble(),
-    );
-
-Map<String, dynamic> _$AddedByStatusToJson(AddedByStatus instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-      'count': instance.count,
-      'percent': instance.percent,
-    };
-
-ShortScreenshot _$ShortScreenshotFromJson(Map<String, dynamic> json) =>
-    ShortScreenshot(
-      yet: (json['yet'] as num).toInt(),
-      owned: (json['owned'] as num).toInt(),
-      beaten: (json['beaten'] as num).toInt(),
-      toplay: (json['toplay'] as num).toInt(),
-      dropped: (json['dropped'] as num).toInt(),
-      playing: (json['playing'] as num).toInt(),
-    );
-
-Map<String, dynamic> _$ShortScreenshotToJson(ShortScreenshot instance) =>
-    <String, dynamic>{
-      'yet': instance.yet,
-      'owned': instance.owned,
-      'beaten': instance.beaten,
-      'toplay': instance.toplay,
-      'dropped': instance.dropped,
-      'playing': instance.playing,
     };
