@@ -7,13 +7,13 @@ part of 'games.dart';
 // **************************************************************************
 
 Game _$GameFromJson(Map<String, dynamic> json) => Game(
-      id: (json['gameId'] as num).toInt(),
+      id: (json['id'] as num).toInt(),
       slug: json['slug'] as String,
       name: json['name'] as String,
       released: json['released'] as String?,
       tba: json['tba'] as bool?,
       backgroundImage: json['backgroundImage'] as String?,
-      rating: (json['rating'] as num?)?.toDouble(),
+      rating: json['rating'] as num?,
       ratingTop: (json['ratingTop'] as num?)?.toInt(),
       ratings: (json['ratings'] as List<dynamic>?)
           ?.map((e) => Rating.fromJson(e as Map<String, dynamic>))
@@ -34,7 +34,7 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
     );
 
 Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
-      'gameId': instance.id,
+      'id': instance.id,
       'slug': instance.slug,
       'name': instance.name,
       'released': instance.released,

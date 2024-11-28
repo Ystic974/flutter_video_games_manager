@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'api.dart';
+part of 'api_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
 
-class _Api implements Api {
-  _Api(
+class _ApiService implements ApiService {
+  _ApiService(
     this._dio, {
     this.baseUrl,
     this.errorLogger,
@@ -22,12 +22,12 @@ class _Api implements Api {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<List<Game>> getListOfGames() async {
+  Future<RawgData<List<Game>>> getListOfGames(dynamic ListOfGamesParams) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<Game>>(Options(
+    final _data = ListOfGamesParams;
+    final _options = _setStreamType<RawgData<List<Game>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -43,12 +43,17 @@ class _Api implements Api {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<Game> _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late RawgData<List<Game>> _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) => Game.fromJson(i as Map<String, dynamic>))
-          .toList();
+      _value = RawgData<List<Game>>.fromJson(
+        _result.data!,
+        (json) => json is List<dynamic>
+            ? json
+                .map<Game>((i) => Game.fromJson(i as Map<String, dynamic>))
+                .toList()
+            : List.empty(),
+      );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -57,11 +62,11 @@ class _Api implements Api {
   }
 
   @override
-  Future<GameSingle> getDetailsOfGame() async {
+  Future<GameSingle> getDetailsOfGame(dynamic DetailsOfGameParams) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final _data = DetailsOfGameParams;
     final _options = _setStreamType<GameSingle>(Options(
       method: 'GET',
       headers: _headers,

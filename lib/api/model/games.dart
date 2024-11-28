@@ -1,22 +1,21 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:video_games_manager_flutter/model/platforms.dart';
-import 'package:video_games_manager_flutter/model/publisher.dart';
-import 'package:video_games_manager_flutter/model/tag.dart';
-import 'package:video_games_manager_flutter/model/developer.dart';
-import 'package:video_games_manager_flutter/model/genre.dart';
+import 'package:video_games_manager_flutter/api/model/platforms.dart';
+import 'package:video_games_manager_flutter/api/model/publisher.dart';
+import 'package:video_games_manager_flutter/api/model/tag.dart';
+import 'package:video_games_manager_flutter/api/model/developer.dart';
+import 'package:video_games_manager_flutter/api/model/genre.dart';
 
 part 'games.g.dart';
 
 @JsonSerializable()
 class Game {
-    @JsonKey(name: "gameId")
     final int id;
     final String slug;
     final String name;
     final String? released;
     final bool? tba;
     final String? backgroundImage;
-    final double? rating;
+    final num? rating;
     final int? ratingTop;
     final List<Rating>? ratings;
     final int? ratingsCount;
@@ -48,7 +47,7 @@ class Game {
         this.shortScreenshots,
     });
 
-    factory Game.fromJson(Map<String, dynamic?> json) => _$GameFromJson(json);
+    factory Game.fromJson(Map<String, dynamic> json) => _$GameFromJson(json);
     Map<String, dynamic> toJson() => _$GameToJson(this);
 }
 
