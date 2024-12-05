@@ -13,6 +13,8 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:video_games_manager_flutter/api/api_service.dart' as _i173;
 import 'package:video_games_manager_flutter/games/game_notifier.dart' as _i259;
 import 'package:video_games_manager_flutter/games/game_repository.dart' as _i52;
+import 'package:video_games_manager_flutter/search/search_notifier.dart'
+    as _i18;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -30,6 +32,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i52.GameRepository(gh<_i173.ApiService>()));
     gh.factory<_i259.GameNotifier>(
         () => _i259.GameNotifier(gh<_i52.GameRepository>()));
+    gh.factory<_i18.GameNotifier>(
+        () => _i18.GameNotifier(gh<_i52.GameRepository>()));
     return this;
   }
 }

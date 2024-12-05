@@ -15,18 +15,21 @@ class GameRepository {
 
     GameRepository(this._apiService);
 
-    Future<RawgData<List<Game>>> getGames(ListGamesParams listGamesParams) async {
+    Future<RawgData<List<Game>>> getGames({ String? query, int? pageSize}) async {
         try {
-            final result = await _apiService.getListOfGames(listGamesParams);
+            final result = await _apiService.getListOfGames(
+                search: query,
+                pageSize: pageSize,
+            );
             return result;
         } catch (e) {
           throw AsyncError(e, StackTrace.empty);
         }
     }
 
-    Future<GameSingle> getGameDetails(DetailsGameParams detailsGameParams) async {
+    Future<GameSingle> getGameDetails(int id) async {
         try {
-            final result = await _apiService.getDetailsOfGame(detailsGameParams);
+            final result = await _apiService.getDetailsOfGame(id);
             return result;
         } catch (e) {
             throw AsyncError(e, StackTrace.empty);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:video_games_manager_flutter/config/injection.dart';
 import 'package:video_games_manager_flutter/games/game_repository.dart';
+import 'package:video_games_manager_flutter/search/search_screen.dart';
 
 import 'api/api_service.dart';
 import 'api/model/games.dart';
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: SearchScreen(),
     ),);
   }
 }

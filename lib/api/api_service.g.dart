@@ -22,11 +22,52 @@ class _ApiService implements ApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<RawgData<List<Game>>> getListOfGames(dynamic ListOfGamesParams) async {
+  Future<RawgData<List<Game>>> getListOfGames({
+    String? key,
+    int? page,
+    int? pageSize,
+    String? search,
+    String? parentPlatform,
+    String? platforms,
+    String? stores,
+    String? developers,
+    String? publishers,
+    String? genres,
+    String? tags,
+    String? creators,
+    String? dates,
+    int? platformsCount,
+    int? excludeCollection,
+    bool? excludeAdditions,
+    bool? excludeParents,
+    bool? excludeGameSeries,
+    String? ordering,
+  }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'key': key,
+      r'page': page,
+      r'page_size': pageSize,
+      r'search': search,
+      r'parent_platforms': parentPlatform,
+      r'platforms': platforms,
+      r'stores': stores,
+      r'developers': developers,
+      r'publishers': publishers,
+      r'genres': genres,
+      r'tags': tags,
+      r'creators': creators,
+      r'dates': dates,
+      r'platforms_count': platformsCount,
+      r'exclude_collection': excludeCollection,
+      r'exclude_additions': excludeAdditions,
+      r'exclude_parents': excludeParents,
+      r'exclude_game_series': excludeGameSeries,
+      r'ordering': ordering,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = ListOfGamesParams;
+    const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<RawgData<List<Game>>>(Options(
       method: 'GET',
       headers: _headers,
@@ -62,11 +103,11 @@ class _ApiService implements ApiService {
   }
 
   @override
-  Future<GameSingle> getDetailsOfGame(dynamic DetailsOfGameParams) async {
+  Future<GameSingle> getDetailsOfGame(int id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = DetailsOfGameParams;
+    const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<GameSingle>(Options(
       method: 'GET',
       headers: _headers,
@@ -74,7 +115,7 @@ class _ApiService implements ApiService {
     )
         .compose(
           _dio.options,
-          '/api/games/{id}',
+          '/api/games/${id}',
           queryParameters: queryParameters,
           data: _data,
         )

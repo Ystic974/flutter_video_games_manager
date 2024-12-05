@@ -22,14 +22,12 @@ class GameNotifier extends StateNotifier<GameState> {
   GameNotifier(this._gameRepository) : super(const GameState.initial()) { }
 
   Future<void> getGames() async {
-    final listGamesParams = ListGamesParams();
-    final games = await _gameRepository.getGames(listGamesParams);
+    final games = await _gameRepository.getGames();
     state = state.gotGames(games.results);
   }
 
-  void getGameDetails() async{
-    final detailsGameParams = DetailsGameParams(id: 42);
-    final singleGame = await _gameRepository.getGameDetails(detailsGameParams);
+  void getGameDetails(int id) async{
+    final singleGame = await _gameRepository.getGameDetails(id);
     state = state.gotGameDetails(singleGame);
 
   }

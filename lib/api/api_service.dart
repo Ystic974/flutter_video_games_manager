@@ -37,14 +37,32 @@ abstract class ApiService {
   }
 
   @GET("/api/games")
-  Future<RawgData<List<Game>>> getListOfGames(
-      @Body() ListOfGamesParams,
-  );
+  Future<RawgData<List<Game>>> getListOfGames({
+    @Query("key") String? key,
+    @Query("page") int? page,
+    @Query("page_size") int? pageSize,
+    @Query("search") String? search,
+    @Query("parent_platforms") String? parentPlatform,
+    @Query("platforms") String? platforms,
+    @Query("stores") String? stores,
+    @Query("developers") String? developers,
+    @Query("publishers") String? publishers,
+    @Query("genres") String? genres,
+    @Query("tags") String? tags,
+    @Query("creators") String? creators,
+    @Query("dates") String? dates,
+    @Query("platforms_count") int? platformsCount,
+    @Query("exclude_collection") int? excludeCollection,
+    @Query("exclude_additions") bool? excludeAdditions,
+    @Query("exclude_parents") bool? excludeParents,
+    @Query("exclude_game_series") bool? excludeGameSeries,
+    @Query("ordering") String? ordering,
+  });
 
   @GET("/api/games/{id}")
   Future<GameSingle> getDetailsOfGame(
-      @Body() DetailsOfGameParams,
-  );
+      @Path("id") int id,
+      );
 
 }
 

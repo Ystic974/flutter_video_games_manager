@@ -12,7 +12,7 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
       name: json['name'] as String,
       released: json['released'] as String?,
       tba: json['tba'] as bool?,
-      backgroundImage: json['backgroundImage'] as String?,
+      backgroundImage: json['background_image'] as String?,
       rating: json['rating'] as num?,
       ratingTop: (json['ratingTop'] as num?)?.toInt(),
       ratings: (json['ratings'] as List<dynamic>?)
@@ -28,7 +28,7 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
       metacritic: (json['metacritic'] as num?)?.toInt(),
       playtime: (json['playtime'] as num?)?.toInt(),
       suggestionsCount: (json['suggestionsCount'] as num?)?.toInt(),
-      shortScreenshots: (json['shortScreenshots'] as List<dynamic>?)
+      shortScreenshots: (json['short_screenshots'] as List<dynamic>?)
           ?.map((e) => ShortScreenshot.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -39,7 +39,7 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
       'name': instance.name,
       'released': instance.released,
       'tba': instance.tba,
-      'backgroundImage': instance.backgroundImage,
+      'background_image': instance.backgroundImage,
       'rating': instance.rating,
       'ratingTop': instance.ratingTop,
       'ratings': instance.ratings,
@@ -50,7 +50,7 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
       'metacritic': instance.metacritic,
       'playtime': instance.playtime,
       'suggestionsCount': instance.suggestionsCount,
-      'shortScreenshots': instance.shortScreenshots,
+      'short_screenshots': instance.shortScreenshots,
     };
 
 GameSingle _$GameSingleFromJson(Map<String, dynamic> json) => GameSingle(
@@ -197,12 +197,12 @@ Map<String, dynamic> _$AddedByStatusToJson(AddedByStatus instance) =>
 
 ShortScreenshot _$ShortScreenshotFromJson(Map<String, dynamic> json) =>
     ShortScreenshot(
-      yet: (json['yet'] as num).toInt(),
-      owned: (json['owned'] as num).toInt(),
-      beaten: (json['beaten'] as num).toInt(),
-      toplay: (json['toplay'] as num).toInt(),
-      dropped: (json['dropped'] as num).toInt(),
-      playing: (json['playing'] as num).toInt(),
+      yet: (json['yet'] as num?)?.toInt(),
+      owned: (json['owned'] as num?)?.toInt(),
+      beaten: (json['beaten'] as num?)?.toInt(),
+      toplay: (json['toplay'] as num?)?.toInt(),
+      dropped: (json['dropped'] as num?)?.toInt(),
+      playing: (json['playing'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$ShortScreenshotToJson(ShortScreenshot instance) =>
