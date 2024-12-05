@@ -1,7 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:injectable/injectable.dart';
-import 'package:video_games_manager_flutter/api/params/list_games_params.dart';
 import 'package:video_games_manager_flutter/search/search_state.dart';
 import '../games/game_repository.dart';
 

@@ -1,11 +1,9 @@
-import 'dart:ffi';
+import 'dart:ui';
 
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:injectable/injectable.dart';
-import 'package:video_games_manager_flutter/api/model/games.dart';
-import 'package:video_games_manager_flutter/api/params/details_game_params.dart';
-import 'package:video_games_manager_flutter/api/params/list_games_params.dart';
+import 'package:video_games_manager_flutter/utils/color_extractor.dart';
 
 import 'game_repository.dart';
 import 'game_state.dart';
@@ -41,14 +39,21 @@ class GameNotifier extends StateNotifier<GameState> {
 
   void getGameDetails(int id) async{
     final singleGame = await _gameRepository.getGameDetails(id);
-    state = state.gotGameDetails(singleGame);
+    //state = state.gotGameDetails(singleGame);
   }
 
   void getGamesByTag(int index, String tag) async {
     if (index == 0) state = state.setLoading(true);
 
     final games = await _gameRepository.getGames(page: (index / 10 + 1).toInt(), pageSize: 10, tags: tag);
-    state = state.gotMoreGames(games.results);
+    switch(index) {
+      case 1:
+        state = state.gotGames2(games.results);
+        break;
+      case 2:
+        state = state.gotGames3(games.results);
+        break;
+    }
   }
 
   void getTagDetails(int tag, int id) async {
@@ -70,7 +75,12 @@ class GameNotifier extends StateNotifier<GameState> {
 
   void getHighlightedGame() async {
     final game = await _gameRepository.getHightlightGame();
+    getHighlightedGameColors(await extractColorFromImage(game.backgroundImage!));
     state = state.gotHightlightGame(game);
+  }
+
+  void getHighlightedGameColors(Triple<Color, Color, Color> colors) async {
+    state = state.setColors(colors.first, colors.second, colors.third);
   }
 
 }

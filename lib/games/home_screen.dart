@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../api/api_service.dart';
 import '../api/model/games.dart';
+import '../utils/color_extractor.dart';
 import 'game_notifier.dart';
 import 'game_repository.dart';
 
@@ -20,7 +21,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(gameNotifierProvider.notifier).getGames(1);
+      ref.read(gameNotifierProvider.notifier).getGames(0);
+      ref.read(gameNotifierProvider.notifier).getGamesByTag(1, GameNotifier.tag1);
+      ref.read(gameNotifierProvider.notifier).getGamesByTag(2, GameNotifier.tag2);
       ref.read(gameNotifierProvider.notifier).getHighlightedGame();
       ref.read(gameNotifierProvider.notifier).getTagDetails(1, int.parse(GameNotifier.tag1));
       ref.read(gameNotifierProvider.notifier).getTagDetails(2, int.parse(GameNotifier.tag2));
@@ -30,12 +33,19 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-    final games = ref.watch(gameNotifierProvider.select((value) => value.games));
     final hightlightGame = ref.watch(gameNotifierProvider.select((value) => value.hightlightGame));
+    final games = ref.watch(gameNotifierProvider.select((value) => value.games));
+    final games2 = ref.watch(gameNotifierProvider.select((value) => value.games2));
+    final games3 = ref.watch(gameNotifierProvider.select((value) => value.games3));
+
     final tag1 = ref.watch(gameNotifierProvider.select((value) => value.tag1));
     final tag2 = ref.watch(gameNotifierProvider.select((value) => value.tag2));
     final genre = ref.watch(gameNotifierProvider.select((value) => value.genre));
+
+    final dominantColor = ref.watch(gameNotifierProvider.select((value) => value.dominantColor));
+    final mutedColor = ref.watch(gameNotifierProvider.select((value) => value.mutedColor));
+    final vibrantColor = ref.watch(gameNotifierProvider.select((value) => value.vibrantColor));
+
 
     return SafeArea(
       child: Scaffold(
@@ -48,9 +58,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   const CircularProgressIndicator()
                 else
                   HighlightedGameCard(
-                    dominantColor: Colors.purple,
-                    mutedColor: Colors.purpleAccent,
-                    vibrantColor: Colors.white,
+                    dominantColor: dominantColor ?? Colors.purple,
+                    mutedColor: mutedColor ?? Colors.purpleAccent,
+                    vibrantColor: vibrantColor ?? Colors.white,
                     highlightedGame: hightlightGame,
                     isInWishlist: false,
                     addToWishlist: () {
@@ -74,7 +84,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 ),
                 Carousel(
                   tagName: tag1 == "" ? "Tag 1" : tag1,
-                  games: games,
+                  games: games2,
                   getMoreGames: (currentSize) {
                     ref.read(gameNotifierProvider.notifier).getGamesByTag(
                       currentSize,
@@ -87,7 +97,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 ),
                 Carousel(
                   tagName: tag2 == "" ? "Tag 2" : tag2,
-                  games: games,
+                  games: games3,
                   getMoreGames: (currentSize) {
                     ref.read(gameNotifierProvider.notifier).getGamesByTag(
                       currentSize,
