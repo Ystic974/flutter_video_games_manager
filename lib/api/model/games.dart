@@ -14,6 +14,7 @@ class Game {
     final String name;
     final String? released;
     final bool? tba;
+    @JsonKey(name: 'background_image')
     final String? backgroundImage;
     final num? rating;
     final int? ratingTop;
@@ -25,6 +26,7 @@ class Game {
     final int? metacritic;
     final int? playtime;
     final int? suggestionsCount;
+    @JsonKey(name: 'short_screenshots')
     final List<ShortScreenshot>? shortScreenshots;
 
     Game({

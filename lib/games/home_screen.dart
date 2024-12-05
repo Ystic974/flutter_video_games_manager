@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../api/api_service.dart';
@@ -16,7 +15,6 @@ class MyHomePage extends StatefulHookConsumerWidget {
 }
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
-  int _counter = 0;
 
   late List<Game>? games;
 
@@ -28,12 +26,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
       ref.read(gameNotifierProvider.notifier).getTagDetails(1, int.parse(GameNotifier.tag1));
       ref.read(gameNotifierProvider.notifier).getTagDetails(2, int.parse(GameNotifier.tag2));
       ref.read(gameNotifierProvider.notifier).getGenreDetails(int.parse(GameNotifier.genre1));
-    });
-  }
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
     });
   }
 
@@ -50,15 +42,23 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              if (games != null) ...games!.map((game) => Text("${game.name}")).toList(),
-              if (games == null) Text("No data fetch"),
-
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-
+            children: [
+              if (games.isEmpty)
+                const CircularProgressIndicator()
+              else if (games.isNotEmpty)
+                HighlightedGameCard(
+                  dominantColor: Colors.purple,
+                  mutedColor: Colors.purpleAccent,
+                  vibrantColor: Colors.white,
+                  highlightedGame: games.first,
+                  isInWishlist: false,
+                  addToWishlist: () {
+                    //ref.read(gameNotifierProvider.notifier).addToWishlist(games.first.id);
+                  },
+                  removeFromWishlist: () {
+                    //ref.read(gameNotifierProvider.notifier).removeFromWishlist(games.first.id);
+                  },
+                ),
               Carousel(
                 tagName: "Trendy",
                 games: games,
@@ -100,11 +100,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
@@ -227,4 +222,145 @@ class CarouselItem extends StatelessWidget {
     );
   }
 }
+
+class HighlightedGameCard extends StatelessWidget {
+  final Color dominantColor;
+  final Color mutedColor;
+  final Color vibrantColor;
+  final Game highlightedGame;
+  final bool isInWishlist;
+  final Function addToWishlist;
+  final Function removeFromWishlist;
+
+  const HighlightedGameCard({
+    Key? key,
+    required this.dominantColor,
+    required this.mutedColor,
+    required this.vibrantColor,
+    required this.highlightedGame,
+    required this.isInWishlist,
+    required this.addToWishlist,
+    required this.removeFromWishlist,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 520,
+      margin: const EdgeInsets.symmetric(horizontal: 32),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        gradient: LinearGradient(
+          colors: [dominantColor, mutedColor],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Game Image
+            Container(
+              width: double.infinity,
+              height: 380,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.green, // Fallback color
+              ),
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: highlightedGame.backgroundImage != null
+                        ? Image.network(
+                      highlightedGame.backgroundImage!,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                    )
+                        : const Placeholder(),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 50,
+                      width: double.infinity,
+                      color: dominantColor.withOpacity(0.9),
+                      child: Center(
+                        child: Text(
+                          highlightedGame.name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: vibrantColor,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 8),
+            // HotPic Row
+            Row(
+              children: [
+                Text(
+                  "HotPic",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: vibrantColor,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Icon(Icons.fireplace, color: vibrantColor),
+              ],
+            ),
+            const SizedBox(height: 8),
+            // Wishlist Button
+            GestureDetector(
+              onTap: () {
+                if (!isInWishlist) {
+                  addToWishlist();
+                } else {
+                  removeFromWishlist();
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: vibrantColor.withOpacity(0.75),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      isInWishlist ? Icons.check : Icons.add,
+                      color: mutedColor,
+                    ),
+                    const SizedBox(width: 16),
+                    Text(
+                      isInWishlist ? "In Wishlist" : "Add to Wishlist",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: mutedColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 

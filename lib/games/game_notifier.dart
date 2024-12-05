@@ -32,8 +32,8 @@ class GameNotifier extends StateNotifier<GameState> {
   GameNotifier(this._gameRepository) : super(const GameState.initial()) { }
 
   Future<void> getGames(int index) async {
-    final from = DateTime.now().subtract(const Duration(days: 90));
-    final to = DateTime.now();
+    final from = DateTime.now().subtract(const Duration(days: 90)).toString().split(' ').first;
+    final to = DateTime.now().toString().split(' ').first;
 
     final games = await _gameRepository.getGames(page: (index / 10 + 1).toInt(), pageSize: 10, dates: "$from,$to");
     state = state.gotGames(games.results);
