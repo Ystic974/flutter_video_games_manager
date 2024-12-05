@@ -39,24 +39,24 @@ class GameRepository {
     }) async {
         try {
             final result = await _apiService.getListOfGames(
-                page,
-                pageSize,
-                search,
-                parentPlatform,
-                platforms,
-                stores,
-                developers,
-                publishers,
-                genres,
-                tags,
-                creators,
-                dates,
-                platformsCount,
-                excludeCollection,
-                excludeAdditions,
-                excludeParents,
-                excludeGameSeries,
-                ordering,
+                page: page,
+                pageSize: pageSize,
+                search: search,
+                parentPlatform: parentPlatform,
+                platforms: platforms,
+                stores: stores,
+                developers: developers,
+                publishers: publishers,
+                genres: genres,
+                tags: tags,
+                creators: creators,
+                dates: dates,
+                platformsCount: platformsCount,
+                excludeCollection: excludeCollection,
+                excludeAdditions: excludeAdditions,
+                excludeParents: excludeParents,
+                excludeGameSeries: excludeGameSeries,
+                ordering: ordering,
             );
             return result;
         } catch (e) {
@@ -64,9 +64,9 @@ class GameRepository {
         }
     }
 
-    Future<GameSingle> getGameDetails(DetailsGameParams detailsGameParams) async {
+    Future<GameSingle> getGameDetails(int id) async {
         try {
-            final result = null;//await _apiService.getDetailsOfGame(null);
+            final result = await _apiService.getDetailsOfGame(id);
             return result;
         } catch (e) {
             throw AsyncError(e, StackTrace.empty);
@@ -86,6 +86,23 @@ class GameRepository {
         try {
             final result = await _apiService.getGenreDetails(id);
             return result;
+        } catch (e) {
+            throw AsyncError(e, StackTrace.empty);
+        }
+    }
+
+    Future<Game> getHightlightGame() async {
+        final from = DateTime.now().subtract(const Duration(days: 30)).toString().split(' ').first;
+        final to = DateTime.now().toString().split(' ').first;
+        final date = "$from,$to";
+        try {
+            final result = await _apiService.getListOfGames(
+                page: 1,
+                pageSize: 1,
+                ordering: "-popularity" ,
+                dates: date
+            );
+            return result.results.first;
         } catch (e) {
             throw AsyncError(e, StackTrace.empty);
         }

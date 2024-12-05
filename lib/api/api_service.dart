@@ -39,7 +39,7 @@ abstract class ApiService {
   }
 
   @GET("/api/games")
-  Future<RawgData<List<Game>>> getListOfGames(
+  Future<RawgData<List<Game>>> getListOfGames({
     @Query("page") int? page,
     @Query("page_size") int? pageSize,
     @Query("search") String? search,
@@ -58,7 +58,7 @@ abstract class ApiService {
     @Query("exclude_parents") bool? excludeParents,
     @Query("exclude_game_series") bool? excludeGameSeries,
     @Query("ordering") String? ordering,
-  );
+  });
 
   @GET("/api/games/{id}")
   Future<GameSingle> getDetailsOfGame(

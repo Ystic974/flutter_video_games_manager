@@ -16,13 +16,12 @@ class MyHomePage extends StatefulHookConsumerWidget {
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
 
-  late List<Game>? games;
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(gameNotifierProvider.notifier).getGames(1);
+      ref.read(gameNotifierProvider.notifier).getHighlightedGame();
       ref.read(gameNotifierProvider.notifier).getTagDetails(1, int.parse(GameNotifier.tag1));
       ref.read(gameNotifierProvider.notifier).getTagDetails(2, int.parse(GameNotifier.tag2));
       ref.read(gameNotifierProvider.notifier).getGenreDetails(int.parse(GameNotifier.genre1));
@@ -33,71 +32,74 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   Widget build(BuildContext context) {
 
     final games = ref.watch(gameNotifierProvider.select((value) => value.games));
+    final hightlightGame = ref.watch(gameNotifierProvider.select((value) => value.hightlightGame));
     final tag1 = ref.watch(gameNotifierProvider.select((value) => value.tag1));
     final tag2 = ref.watch(gameNotifierProvider.select((value) => value.tag2));
     final genre = ref.watch(gameNotifierProvider.select((value) => value.genre));
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (games.isEmpty)
-                const CircularProgressIndicator()
-              else if (games.isNotEmpty)
-                HighlightedGameCard(
-                  dominantColor: Colors.purple,
-                  mutedColor: Colors.purpleAccent,
-                  vibrantColor: Colors.white,
-                  highlightedGame: games.first,
-                  isInWishlist: false,
-                  addToWishlist: () {
-                    //ref.read(gameNotifierProvider.notifier).addToWishlist(games.first.id);
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (hightlightGame == null)
+                  const CircularProgressIndicator()
+                else
+                  HighlightedGameCard(
+                    dominantColor: Colors.purple,
+                    mutedColor: Colors.purpleAccent,
+                    vibrantColor: Colors.white,
+                    highlightedGame: hightlightGame,
+                    isInWishlist: false,
+                    addToWishlist: () {
+                      //ref.read(gameNotifierProvider.notifier).addToWishlist(games.first.id);
+                    },
+                    removeFromWishlist: () {
+                      //ref.read(gameNotifierProvider.notifier).removeFromWishlist(games.first.id);
+                    },
+                  ),
+                Carousel(
+                  tagName: "Trendy",
+                  games: games,
+                  getMoreGames: (currentSize) {
+                    ref.read(gameNotifierProvider.notifier).getGames(
+                      currentSize
+                    );
                   },
-                  removeFromWishlist: () {
-                    //ref.read(gameNotifierProvider.notifier).removeFromWishlist(games.first.id);
+                  onNavigateToGameDetails: (gameId) {
+                    //ref.read(gameNotifierProvider.notifier).navigateToGameDetails(gameId);
                   },
                 ),
-              Carousel(
-                tagName: "Trendy",
-                games: games,
-                getMoreGames: (currentSize) {
-                  ref.read(gameNotifierProvider.notifier).getGames(
-                    currentSize
-                  );
-                },
-                onNavigateToGameDetails: (gameId) {
-                  //ref.read(gameNotifierProvider.notifier).navigateToGameDetails(gameId);
-                },
-              ),
-              Carousel(
-                tagName: tag1 == "" ? "Tag 1" : tag1,
-                games: games,
-                getMoreGames: (currentSize) {
-                  ref.read(gameNotifierProvider.notifier).getGamesByTag(
-                    currentSize,
-                    GameNotifier.tag1,
-                  );
-                },
-                onNavigateToGameDetails: (gameId) {
-                  //ref.read(gameNotifierProvider.notifier).navigateToGameDetails(gameId);
-                },
-              ),
-              Carousel(
-                tagName: tag2 == "" ? "Tag 2" : tag2,
-                games: games,
-                getMoreGames: (currentSize) {
-                  ref.read(gameNotifierProvider.notifier).getGamesByTag(
-                    currentSize,
-                    GameNotifier.tag2,
-                  );
-                },
-                onNavigateToGameDetails: (gameId) {
-                  //ref.read(gameNotifierProvider.notifier).navigateToGameDetails(gameId);
-                },
-              ),
-            ],
+                Carousel(
+                  tagName: tag1 == "" ? "Tag 1" : tag1,
+                  games: games,
+                  getMoreGames: (currentSize) {
+                    ref.read(gameNotifierProvider.notifier).getGamesByTag(
+                      currentSize,
+                      GameNotifier.tag1,
+                    );
+                  },
+                  onNavigateToGameDetails: (gameId) {
+                    //ref.read(gameNotifierProvider.notifier).navigateToGameDetails(gameId);
+                  },
+                ),
+                Carousel(
+                  tagName: tag2 == "" ? "Tag 2" : tag2,
+                  games: games,
+                  getMoreGames: (currentSize) {
+                    ref.read(gameNotifierProvider.notifier).getGamesByTag(
+                      currentSize,
+                      GameNotifier.tag2,
+                    );
+                  },
+                  onNavigateToGameDetails: (gameId) {
+                    //ref.read(gameNotifierProvider.notifier).navigateToGameDetails(gameId);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -318,7 +320,7 @@ class HighlightedGameCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                Icon(Icons.fireplace, color: vibrantColor),
+                Icon(Icons.local_fire_department, color: vibrantColor),
               ],
             ),
             const SizedBox(height: 8),

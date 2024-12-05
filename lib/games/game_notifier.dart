@@ -39,9 +39,8 @@ class GameNotifier extends StateNotifier<GameState> {
     state = state.gotGames(games.results);
   }
 
-  void getGameDetails() async {
-    final detailsGameParams = DetailsGameParams(id: 42);
-    final singleGame = await _gameRepository.getGameDetails(detailsGameParams);
+  void getGameDetails(int id) async{
+    final singleGame = await _gameRepository.getGameDetails(id);
     state = state.gotGameDetails(singleGame);
   }
 
@@ -67,6 +66,11 @@ class GameNotifier extends StateNotifier<GameState> {
   void getGenreDetails(int id) async {
     final tagRes = await _gameRepository.getGenreDetails(id);
     state = state.setGenre(tagRes.name);
+  }
+
+  void getHighlightedGame() async {
+    final game = await _gameRepository.getHightlightGame();
+    state = state.gotHightlightGame(game);
   }
 
 }

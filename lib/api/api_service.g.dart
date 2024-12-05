@@ -22,7 +22,7 @@ class _ApiService implements ApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<RawgData<List<Game>>> getListOfGames(
+  Future<RawgData<List<Game>>> getListOfGames({
     int? page,
     int? pageSize,
     String? search,
@@ -41,7 +41,7 @@ class _ApiService implements ApiService {
     bool? excludeParents,
     bool? excludeGameSeries,
     String? ordering,
-  ) async {
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,

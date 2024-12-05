@@ -216,12 +216,12 @@ class AddedByStatus {
 
 @JsonSerializable()
 class ShortScreenshot {
-    final int yet;
-    final int owned;
-    final int beaten;
-    final int toplay;
-    final int dropped;
-    final int playing;
+    final int? yet;
+    final int? owned;
+    final int? beaten;
+    final int? toplay;
+    final int? dropped;
+    final int? playing;
 
     ShortScreenshot({
         required this.yet,
