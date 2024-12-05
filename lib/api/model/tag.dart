@@ -7,20 +7,18 @@ class Tag {
   final int id;
   final String name;
   final String slug;
-  @JsonKey(name: 'game_count')
-  final int gameCount;
-  @JsonKey(name: 'image_background_url')
+  @JsonKey(name: 'games_count')
+  final int gamesCount;
+  @JsonKey(name: 'image_background')
   final String imageBackgroundURL;
-  final String language;
   final String description;
 
   Tag({
     required this.id,
     required this.name,
     required this.slug,
-    required this.gameCount,
+    required this.gamesCount,
     required this.imageBackgroundURL,
-    required this.language,
     required this.description,
   });
 

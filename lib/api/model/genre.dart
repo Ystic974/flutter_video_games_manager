@@ -9,7 +9,7 @@ class Genre {
   final String slug;
   @JsonKey(name: 'games_count')
   final int gamesCount;
-  @JsonKey(name: 'image_background_url')
+  @JsonKey(name: 'image_background')
   final String imageBackgroundURL;
   final String description;
 

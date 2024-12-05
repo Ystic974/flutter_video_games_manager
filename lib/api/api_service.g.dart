@@ -22,11 +22,50 @@ class _ApiService implements ApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<RawgData<List<Game>>> getListOfGames(dynamic ListOfGamesParams) async {
+  Future<RawgData<List<Game>>> getListOfGames(
+    int? page,
+    int? pageSize,
+    String? search,
+    String? parentPlatform,
+    String? platforms,
+    String? stores,
+    String? developers,
+    String? publishers,
+    String? genres,
+    String? tags,
+    String? creators,
+    String? dates,
+    int? platformsCount,
+    int? excludeCollection,
+    bool? excludeAdditions,
+    bool? excludeParents,
+    bool? excludeGameSeries,
+    String? ordering,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'page_size': pageSize,
+      r'search': search,
+      r'parent_platforms': parentPlatform,
+      r'platforms': platforms,
+      r'stores': stores,
+      r'developers': developers,
+      r'publishers': publishers,
+      r'genres': genres,
+      r'tags': tags,
+      r'creators': creators,
+      r'dates': dates,
+      r'platforms_count': platformsCount,
+      r'exclude_collection': excludeCollection,
+      r'exclude_additions': excludeAdditions,
+      r'exclude_parents': excludeParents,
+      r'exclude_game_series': excludeGameSeries,
+      r'ordering': ordering,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = ListOfGamesParams;
+    const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<RawgData<List<Game>>>(Options(
       method: 'GET',
       headers: _headers,
@@ -62,11 +101,11 @@ class _ApiService implements ApiService {
   }
 
   @override
-  Future<GameSingle> getDetailsOfGame(dynamic DetailsOfGameParams) async {
+  Future<GameSingle> getDetailsOfGame(int id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = DetailsOfGameParams;
+    const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<GameSingle>(Options(
       method: 'GET',
       headers: _headers,
@@ -74,7 +113,7 @@ class _ApiService implements ApiService {
     )
         .compose(
           _dio.options,
-          '/api/games/{id}',
+          '/api/games/${id}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -87,6 +126,72 @@ class _ApiService implements ApiService {
     late GameSingle _value;
     try {
       _value = GameSingle.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<Tag> getTagDetails(int id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<Tag>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/api/tags/${id}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late Tag _value;
+    try {
+      _value = Tag.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<Genre> getGenreDetails(int id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<Genre>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/api/genres/${id}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late Genre _value;
+    try {
+      _value = Genre.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

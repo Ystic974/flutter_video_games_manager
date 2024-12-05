@@ -9,15 +9,6 @@ import 'game_repository.dart';
 class MyHomePage extends StatefulHookConsumerWidget {
   const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -33,17 +24,15 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(gameNotifierProvider.notifier).getGames();
+      ref.read(gameNotifierProvider.notifier).getGames(1);
+      ref.read(gameNotifierProvider.notifier).getTagDetails(1, int.parse(GameNotifier.tag1));
+      ref.read(gameNotifierProvider.notifier).getTagDetails(2, int.parse(GameNotifier.tag2));
+      ref.read(gameNotifierProvider.notifier).getGenreDetails(int.parse(GameNotifier.genre1));
     });
   }
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
@@ -52,49 +41,190 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   Widget build(BuildContext context) {
 
     final games = ref.watch(gameNotifierProvider.select((value) => value.games));
+    final tag1 = ref.watch(gameNotifierProvider.select((value) => value.tag1));
+    final tag2 = ref.watch(gameNotifierProvider.select((value) => value.tag2));
+    final genre = ref.watch(gameNotifierProvider.select((value) => value.genre));
 
     return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            if (games != null) ...games!.map((game) => Text("${game.name}")).toList(),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              if (games != null) ...games!.map((game) => Text("${game.name}")).toList(),
+              if (games == null) Text("No data fetch"),
+
+              Text(
+                '$_counter',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+
+              Carousel(
+                tagName: "Trendy",
+                games: games,
+                getMoreGames: (currentSize) {
+                  ref.read(gameNotifierProvider.notifier).getGames(
+                    currentSize
+                  );
+                },
+                onNavigateToGameDetails: (gameId) {
+                  //ref.read(gameNotifierProvider.notifier).navigateToGameDetails(gameId);
+                },
+              ),
+              Carousel(
+                tagName: tag1 == "" ? "Tag 1" : tag1,
+                games: games,
+                getMoreGames: (currentSize) {
+                  ref.read(gameNotifierProvider.notifier).getGamesByTag(
+                    currentSize,
+                    GameNotifier.tag1,
+                  );
+                },
+                onNavigateToGameDetails: (gameId) {
+                  //ref.read(gameNotifierProvider.notifier).navigateToGameDetails(gameId);
+                },
+              ),
+              Carousel(
+                tagName: tag2 == "" ? "Tag 2" : tag2,
+                games: games,
+                getMoreGames: (currentSize) {
+                  ref.read(gameNotifierProvider.notifier).getGamesByTag(
+                    currentSize,
+                    GameNotifier.tag2,
+                  );
+                },
+                onNavigateToGameDetails: (gameId) {
+                  //ref.read(gameNotifierProvider.notifier).navigateToGameDetails(gameId);
+                },
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
+
+class Carousel extends StatelessWidget {
+  final String tagName;
+  final List<Game> games;
+  final Function(int currentSize) getMoreGames;
+  final Function(int gameId) onNavigateToGameDetails;
+
+  const Carousel({
+    Key? key,
+    required this.tagName,
+    required this.games,
+    required this.getMoreGames,
+    required this.onNavigateToGameDetails,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final ScrollController scrollController = ScrollController();
+
+    scrollController.addListener(() {
+      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+        getMoreGames(games.length);
+      }
+    });
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            tagName,
+            style: const TextStyle(
+              color: Colors.black, // TODO
+              fontSize: 25,
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 150,
+          child: ListView.builder(
+            controller: scrollController,
+            scrollDirection: Axis.horizontal,
+            itemCount: games.length,
+            itemBuilder: (context, index) {
+              return CarouselItem(
+                game: games[index],
+                onNavigateToGameDetails: onNavigateToGameDetails,
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class CarouselItem extends StatelessWidget {
+  final Game game;
+  final Function(int gameId) onNavigateToGameDetails;
+
+  const CarouselItem({
+    Key? key,
+    required this.game,
+    required this.onNavigateToGameDetails,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        onNavigateToGameDetails(game.id);
+        //game.addToOwned(); // Assuming Game class has a method to add itself to owned.
+      },
+      child: Container(
+        margin: const EdgeInsets.all(8.0),
+        height: 150,
+        width: 120,
+        decoration: BoxDecoration(
+          color: Colors.purple,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: game.backgroundImage != null
+                  ? Image.network(
+                game.backgroundImage!,
+                fit: BoxFit.cover,
+                height: double.infinity,
+                width: double.infinity,
+              )
+                  : const Placeholder(),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 60,
+                width: double.infinity,
+                color: Colors.black.withOpacity(0.8),
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  game.name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
