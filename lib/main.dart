@@ -29,6 +29,12 @@ class MyApp extends StatelessWidget {
     return ProviderScope(child:
       MaterialApp(
       title: 'Flutter Demo',
+      routes: {
+        '/home': (context) => const MyHomePage(),
+        '/search': (context) => const SearchScreen(),
+        //TODO
+        //'/profile' : (context) => const ProfileScreen(),
+      },
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -48,7 +54,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SearchScreen(),
+      initialRoute: '/home',
     ),);
   }
 }
