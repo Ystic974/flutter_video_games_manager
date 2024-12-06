@@ -24,8 +24,8 @@ class Platform {
 class PlatformParentSingle {
   final Platform platform;
   @JsonKey(name: 'release_at')
-  final String releaseAt;
-  final Requirement requirements;
+  final String? releaseAt;
+  final Requirement? requirements;
 
   PlatformParentSingle({
     required this.platform,
@@ -41,8 +41,8 @@ class PlatformParentSingle {
 
 @JsonSerializable()
 class Requirement {
-  final String minimum;
-  final String recommended;
+  final String? minimum;
+  final String? recommended;
 
   Requirement({
     required this.minimum,

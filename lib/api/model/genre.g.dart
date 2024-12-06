@@ -10,9 +10,9 @@ Genre _$GenreFromJson(Map<String, dynamic> json) => Genre(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
       slug: json['slug'] as String,
-      gamesCount: (json['games_count'] as num).toInt(),
-      imageBackgroundURL: json['image_background'] as String,
-      description: json['description'] as String,
+      gamesCount: (json['games_count'] as num?)?.toInt(),
+      imageBackgroundURL: json['image_background'] as String?,
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$GenreToJson(Genre instance) => <String, dynamic>{

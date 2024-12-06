@@ -14,6 +14,7 @@ class GameState extends Equatable {
     this.games = const [],
     this.games2 = const [],
     this.games3 = const [],
+    this.gameSingle = null,
     this.hightlightGame = null,
     this.tag1 = "",
     this.tag2 = "",
@@ -26,6 +27,7 @@ class GameState extends Equatable {
   final List<Game> games;
   final List<Game> games2;
   final List<Game> games3;
+  final GameSingle? gameSingle;
   final Game? hightlightGame;
   final bool isLoading;
   final String tag1;
@@ -50,6 +52,12 @@ class GameState extends Equatable {
   GameState gotGames3(List<Game> games3) {
     return _copyWith(
       games3: games3,
+    );
+  }
+
+  GameState gotGameSingle(GameSingle gameSingle) {
+    return _copyWith(
+      gameSingle: gameSingle,
     );
   }
 
@@ -103,6 +111,7 @@ class GameState extends Equatable {
     List<Game>? games,
     List<Game>? games2,
     List<Game>? games3,
+    GameSingle? gameSingle,
     Game? hightlightGame,
     String? tag1,
     String? tag2,
@@ -114,6 +123,7 @@ class GameState extends Equatable {
       games: games ?? this.games,
       games2: games2 ?? this.games2,
       games3: games3 ?? this.games3,
+      gameSingle: gameSingle ?? this.gameSingle,
       hightlightGame: hightlightGame ?? this.hightlightGame,
       tag1: tag1 ?? this.tag1,
       tag2: tag2 ?? this.tag2,
@@ -130,6 +140,7 @@ class GameState extends Equatable {
     games,
     games2,
     games3,
+    gameSingle,
     hightlightGame,
     tag1,
     tag2,

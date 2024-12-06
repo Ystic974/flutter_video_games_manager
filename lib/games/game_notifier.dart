@@ -39,7 +39,7 @@ class GameNotifier extends StateNotifier<GameState> {
 
   void getGameDetails(int id) async{
     final singleGame = await _gameRepository.getGameDetails(id);
-    //state = state.gotGameDetails(singleGame);
+    state = state.gotGameSingle(singleGame);
   }
 
   void getGamesByTag(int index, String tag) async {

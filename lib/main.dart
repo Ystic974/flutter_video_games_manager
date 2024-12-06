@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:video_games_manager_flutter/config/injection.dart';
 import 'package:video_games_manager_flutter/search/search_screen.dart';
 
+import 'games/game_details_screen.dart';
 import 'games/home_screen.dart';
 
 void main() {
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) => const MyHomePage(),
         '/search': (context) => const SearchScreen(),
+        '/game_details': (context) => const GameDetailsPage(),
         //TODO
         //'/profile' : (context) => const ProfileScreen(),
       },

@@ -22,9 +22,10 @@ PlatformParentSingle _$PlatformParentSingleFromJson(
         Map<String, dynamic> json) =>
     PlatformParentSingle(
       platform: Platform.fromJson(json['platform'] as Map<String, dynamic>),
-      releaseAt: json['release_at'] as String,
-      requirements:
-          Requirement.fromJson(json['requirements'] as Map<String, dynamic>),
+      releaseAt: json['release_at'] as String?,
+      requirements: json['requirements'] == null
+          ? null
+          : Requirement.fromJson(json['requirements'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PlatformParentSingleToJson(
@@ -36,8 +37,8 @@ Map<String, dynamic> _$PlatformParentSingleToJson(
     };
 
 Requirement _$RequirementFromJson(Map<String, dynamic> json) => Requirement(
-      minimum: json['minimum'] as String,
-      recommended: json['recommended'] as String,
+      minimum: json['minimum'] as String?,
+      recommended: json['recommended'] as String?,
     );
 
 Map<String, dynamic> _$RequirementToJson(Requirement instance) =>

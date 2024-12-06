@@ -72,9 +72,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       currentSize
                     );
                   },
-                  onNavigateToGameDetails: (gameId) {
-                    //ref.read(gameNotifierProvider.notifier).navigateToGameDetails(gameId);
-                  },
                 ),
                 Carousel(
                   tagName: tag1 == "" ? "Tag 1" : tag1,
@@ -85,9 +82,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       GameNotifier.tag1,
                     );
                   },
-                  onNavigateToGameDetails: (gameId) {
-                    //ref.read(gameNotifierProvider.notifier).navigateToGameDetails(gameId);
-                  },
                 ),
                 Carousel(
                   tagName: tag2 == "" ? "Tag 2" : tag2,
@@ -97,9 +91,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       currentSize,
                       GameNotifier.tag2,
                     );
-                  },
-                  onNavigateToGameDetails: (gameId) {
-                    //ref.read(gameNotifierProvider.notifier).navigateToGameDetails(gameId);
                   },
                 ),
               ],
@@ -115,14 +106,12 @@ class Carousel extends StatelessWidget {
   final String tagName;
   final List<Game> games;
   final Function(int currentSize) getMoreGames;
-  final Function(int gameId) onNavigateToGameDetails;
 
   const Carousel({
     Key? key,
     required this.tagName,
     required this.games,
     required this.getMoreGames,
-    required this.onNavigateToGameDetails,
   }) : super(key: key);
 
   @override
@@ -157,7 +146,6 @@ class Carousel extends StatelessWidget {
             itemBuilder: (context, index) {
               return CarouselItem(
                 game: games[index],
-                onNavigateToGameDetails: onNavigateToGameDetails,
               );
             },
           ),
@@ -169,20 +157,21 @@ class Carousel extends StatelessWidget {
 
 class CarouselItem extends StatelessWidget {
   final Game game;
-  final Function(int gameId) onNavigateToGameDetails;
 
   const CarouselItem({
     Key? key,
     required this.game,
-    required this.onNavigateToGameDetails,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onNavigateToGameDetails(game.id);
-        //game.addToOwned(); // Assuming Game class has a method to add itself to owned.
+        Navigator.pushNamed(
+            context,
+            '/game_details',
+            arguments: game.id,
+        );
       },
       child: Container(
         margin: const EdgeInsets.all(8.0),
