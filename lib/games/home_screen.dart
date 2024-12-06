@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../api/api_service.dart';
@@ -6,15 +7,17 @@ import 'game_notifier.dart';
 import 'game_repository.dart';
 
 class MyHomePage extends StatefulHookConsumerWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key});
 
-  final String title;
 
   @override
   ConsumerState<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
+  int _counter = 0;
+
+  late List<Game>? games;
 
   @override
   void initState() {
@@ -364,5 +367,3 @@ class HighlightedGameCard extends StatelessWidget {
     );
   }
 }
-
-

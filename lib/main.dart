@@ -29,12 +29,18 @@ class MyApp extends StatelessWidget {
     return ProviderScope(child:
       MaterialApp(
       title: 'Flutter Demo',
+      routes: {
+        '/home': (context) => const MyHomePage(),
+        '/search': (context) => const SearchScreen(),
+        //TODO
+        //'/profile' : (context) => const ProfileScreen(),
+      },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
       debugShowCheckedModeBanner: false,
+      initialRoute: '/home',
     ),);
   }
 }
