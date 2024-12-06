@@ -31,6 +31,14 @@ class GameNotifier extends StateNotifier<SearchState> {
     state = state.gotSearchResults([]);
   }
 
+  void getGameBySearch(String query, int actualListSize) async {
+    if(actualListSize == 1){
+      state = state.setLoading(true);
+    }
+    final games = await _gameRepository.getGames(search: query, pageSize: 20, page: (actualListSize~/20)+1);
+    state = state.addToSearchResults(games.results);
+    state = state.setLoading(false);
+  }
 
 
 }

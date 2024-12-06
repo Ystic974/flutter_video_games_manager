@@ -6,5 +6,6 @@ class Assets {
   static const String assetsDiskRpg = 'assets/disk_rpg.png';
   static const String assetsDiskSimu = 'assets/disk_simu.png';
   static const String assetsDiskSport = 'assets/disk_sport.png';
+  static const String assetsImagePlaceholder = 'assets/image_placeholder.png';
 
 }

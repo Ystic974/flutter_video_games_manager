@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:video_games_manager_flutter/generated/assets.dart';
 import 'package:video_games_manager_flutter/ressources/app_color.dart';
 import 'package:video_games_manager_flutter/search/search_notifier.dart';
-import '../api/model/games.dart';
+import '../../api/model/games.dart';
 
 class SearchScreen extends StatefulHookConsumerWidget {
   const SearchScreen({super.key});
@@ -181,6 +181,8 @@ class _AutoCompleteSearchBarState extends State<AutoCompleteSearchBar> {
   final FocusNode _focusNode = FocusNode();
   bool _isFocused = false;
 
+
+
   @override
   void initState() {
     super.initState();
@@ -201,6 +203,10 @@ class _AutoCompleteSearchBarState extends State<AutoCompleteSearchBar> {
     widget.searchController.clear();
     widget.ref.read(searchNotifierProvider.notifier).emptySearchGames();
     _focusNode.unfocus();
+  }
+
+  void _navToSearchResults() {
+    Navigator.of(context).pushNamed('/search/results', arguments: widget.searchController.text);
   }
 
   @override
@@ -238,9 +244,11 @@ class _AutoCompleteSearchBarState extends State<AutoCompleteSearchBar> {
             ),
             filled: true,
             fillColor: AppColor.purple30,
-            prefixIcon: const Icon(
-              Icons.search,
-              color: Colors.white,
+            prefixIcon: IconButton(
+              icon : const Icon(
+                  Icons.search
+              ),
+              onPressed: widget.searchController.text != '' ? _navToSearchResults : null,
             ),
             suffixIcon: widget.searchController.text.isNotEmpty
                 ? IconButton(
