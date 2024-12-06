@@ -4,6 +4,7 @@ import 'package:video_games_manager_flutter/generated/assets.dart';
 import 'package:video_games_manager_flutter/ressources/app_color.dart';
 import 'package:video_games_manager_flutter/search/search_notifier.dart';
 import '../../api/model/games.dart';
+import '../../app/widgets/app_bottom_nav_bar.dart';
 
 class SearchScreen extends StatefulHookConsumerWidget {
   const SearchScreen({super.key});
@@ -24,10 +25,13 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: AppBottomNavBar(
+          currentIndex: 1,
+        ),
         body: Container(
           height: double.infinity,
           width: double.infinity,
-          decoration: BoxDecoration(gradient: AppColor.whitePurpleGradient),
+          decoration: BoxDecoration(gradient: AppColor.blackPurpleGradient),
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),

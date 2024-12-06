@@ -44,7 +44,7 @@ class _SearchScreenState extends ConsumerState<SearchResultScreen> {
           child: Container(
             height: double.infinity,
             width: double.infinity,
-            decoration: BoxDecoration(gradient: AppColor.whitePurpleGradient),
+            decoration: BoxDecoration(gradient: AppColor.blackPurpleGradient),
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(8),
