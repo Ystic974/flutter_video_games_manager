@@ -1,24 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../api/api_service.dart';
 import '../api/model/games.dart';
-import '../utils/color_extractor.dart';
 import 'game_notifier.dart';
-import 'game_repository.dart';
 
 class MyHomePage extends StatefulHookConsumerWidget {
   const MyHomePage({super.key});
-
-
   @override
   ConsumerState<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
-  int _counter = 0;
-
-  late List<Game>? games;
 
   @override
   void initState() {

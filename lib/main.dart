@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:video_games_manager_flutter/config/injection.dart';
+import 'package:video_games_manager_flutter/search/search_screen.dart';
 
 import 'games/home_screen.dart';
 
