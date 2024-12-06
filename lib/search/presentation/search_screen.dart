@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:video_games_manager_flutter/generated/assets.dart';
 import 'package:video_games_manager_flutter/ressources/app_color.dart';
 import 'package:video_games_manager_flutter/search/search_notifier.dart';
+import 'package:video_games_manager_flutter/search/utils/search_args.dart';
 import '../../api/model/games.dart';
 import '../../app/widgets/app_bottom_nav_bar.dart';
 
@@ -59,7 +60,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                         title: 'Role Play\nGames',
                         asset: Assets.assetsDiskRpg,
                         onTap: () {
-                          //TODO Navigate to genre screen
+                          Navigator.of(context).pushNamed('/search/results', arguments: SearchArguments(type: SearchType.genre, genreId: 5));
                         },
                       ),
                       SizedBox(
@@ -70,7 +71,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                         title: 'First Person\nShooter',
                         asset: Assets.assetsDiskFps,
                         onTap: () {
-                          //TODO Navigate to genre screen
+                          Navigator.of(context).pushNamed('/search/results', arguments: SearchArguments(type: SearchType.tag, tagId: 30));
                         },
                       ),
                     ],
@@ -86,7 +87,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                         title: 'Sport\nGames',
                         asset: Assets.assetsDiskSport,
                         onTap: () {
-                          //TODO Navigate to genre screen
+                          Navigator.of(context).pushNamed('/search/results', arguments: SearchArguments(type: SearchType.genre, genreId: 15));
                         },
                       ),
                       SizedBox(
@@ -97,7 +98,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                         title: 'Simulation\nGames',
                         asset: Assets.assetsDiskSimu,
                         onTap: () {
-                          //TODO Navigate to genre screen
+                          Navigator.of(context).pushNamed('/search/results', arguments: SearchArguments(type: SearchType.genre, genreId: 14));
                         },
                       ),
                     ],
@@ -127,7 +128,7 @@ class _GenreCard extends StatelessWidget {
     return Expanded(
       child: InkWell(
         onTap: () {
-          //TODO Navigate to genre screen
+          onTap();
         },
         child: Container(
           height: 100,

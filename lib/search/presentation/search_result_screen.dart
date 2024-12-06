@@ -4,13 +4,14 @@ import 'package:video_games_manager_flutter/app/loader/app_loader.dart';
 import 'package:video_games_manager_flutter/generated/assets.dart';
 import 'package:video_games_manager_flutter/ressources/app_color.dart';
 import 'package:video_games_manager_flutter/search/search_notifier.dart';
+import 'package:video_games_manager_flutter/search/utils/search_args.dart';
 import '../../api/model/games.dart';
 import '../../games/game_notifier.dart';
 
 class SearchResultScreen extends StatefulHookConsumerWidget {
-  const SearchResultScreen({super.key, required this.query});
+  const SearchResultScreen({super.key, required this.args});
 
-  final String query;
+  final SearchArguments args;
 
   @override
   ConsumerState<SearchResultScreen> createState() => _SearchScreenState();
@@ -25,7 +26,7 @@ class _SearchScreenState extends ConsumerState<SearchResultScreen> {
       ref.read(searchNotifierProvider.notifier).emptySearchGames();
       ref
           .read(searchNotifierProvider.notifier)
-          .getGameBySearch(widget.query, 1);
+          .getGameBySearch(widget.args, 1);
     });
     super.initState();
   }
@@ -64,7 +65,7 @@ class _SearchScreenState extends ConsumerState<SearchResultScreen> {
                         ref
                             .read(searchNotifierProvider.notifier)
                             .getGameBySearch(
-                                widget.query, searchResults.length);
+                                widget.args, searchResults.length);
                       }
 
                       return Card(

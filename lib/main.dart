@@ -5,6 +5,7 @@ import 'package:video_games_manager_flutter/config/injection.dart';
 import 'package:video_games_manager_flutter/games/game_repository.dart';
 import 'package:video_games_manager_flutter/search/presentation/search_result_screen.dart';
 import 'package:video_games_manager_flutter/search/presentation/search_screen.dart';
+import 'package:video_games_manager_flutter/search/utils/search_args.dart';
 
 import 'api/api_service.dart';
 import 'api/model/games.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) => const MyHomePage(),
         '/search': (context) => const SearchScreen(),
-        '/search/results': (context) => SearchResultScreen(query: ModalRoute.of(context)!.settings.arguments as String),        //TODO
+        '/search/results': (context) => SearchResultScreen(args: ModalRoute.of(context)!.settings.arguments as SearchArguments),        //TODO
         //'/profile' : (context) => const ProfileScreen(),
       },
       theme: ThemeData(
