@@ -8,6 +8,7 @@ class AppColor {
 
   static const Color purple = Color(0xFF7C27B0);
   static Color purple30 = purple.withOpacity(0.3);
+  static  Color purple50 = purple.withOpacity(0.5);
   static const Color greyPurple =  Color(0x32e2c8f3);
 
   static const Color orange =  Color(0xFFFF5722);
@@ -20,6 +21,10 @@ class AppColor {
 
   static final whitePurpleGradient = createGradient([
     greyPurple, purple
+  ]);
+
+  static final blackPurpleGradient = createGradient([
+    purple50, Colors.black
   ]);
 
 

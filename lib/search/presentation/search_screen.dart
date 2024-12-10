@@ -3,7 +3,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:video_games_manager_flutter/generated/assets.dart';
 import 'package:video_games_manager_flutter/ressources/app_color.dart';
 import 'package:video_games_manager_flutter/search/search_notifier.dart';
-import '../api/model/games.dart';
+import 'package:video_games_manager_flutter/search/utils/search_args.dart';
+import '../../api/model/games.dart';
+import '../../app/widgets/app_bottom_nav_bar.dart';
 
 class SearchScreen extends StatefulHookConsumerWidget {
   const SearchScreen({super.key});
@@ -24,10 +26,13 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: AppBottomNavBar(
+          currentIndex: 1,
+        ),
         body: Container(
           height: double.infinity,
           width: double.infinity,
-          decoration: BoxDecoration(gradient: AppColor.whitePurpleGradient),
+          decoration: BoxDecoration(gradient: AppColor.blackPurpleGradient),
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -55,7 +60,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                         title: 'Role Play\nGames',
                         asset: Assets.assetsDiskRpg,
                         onTap: () {
-                          //TODO Navigate to genre screen
+                          Navigator.of(context).pushNamed('/search/results', arguments: SearchArguments(type: SearchType.genre, genreId: 5));
                         },
                       ),
                       SizedBox(
@@ -66,7 +71,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                         title: 'First Person\nShooter',
                         asset: Assets.assetsDiskFps,
                         onTap: () {
-                          //TODO Navigate to genre screen
+                          Navigator.of(context).pushNamed('/search/results', arguments: SearchArguments(type: SearchType.tag, tagId: 30));
                         },
                       ),
                     ],
@@ -82,7 +87,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                         title: 'Sport\nGames',
                         asset: Assets.assetsDiskSport,
                         onTap: () {
-                          //TODO Navigate to genre screen
+                          Navigator.of(context).pushNamed('/search/results', arguments: SearchArguments(type: SearchType.genre, genreId: 15));
                         },
                       ),
                       SizedBox(
@@ -93,7 +98,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                         title: 'Simulation\nGames',
                         asset: Assets.assetsDiskSimu,
                         onTap: () {
-                          //TODO Navigate to genre screen
+                          Navigator.of(context).pushNamed('/search/results', arguments: SearchArguments(type: SearchType.genre, genreId: 14));
                         },
                       ),
                     ],
@@ -123,7 +128,7 @@ class _GenreCard extends StatelessWidget {
     return Expanded(
       child: InkWell(
         onTap: () {
-          //TODO Navigate to genre screen
+          onTap();
         },
         child: Container(
           height: 100,
@@ -181,6 +186,8 @@ class _AutoCompleteSearchBarState extends State<AutoCompleteSearchBar> {
   final FocusNode _focusNode = FocusNode();
   bool _isFocused = false;
 
+
+
   @override
   void initState() {
     super.initState();
@@ -201,6 +208,10 @@ class _AutoCompleteSearchBarState extends State<AutoCompleteSearchBar> {
     widget.searchController.clear();
     widget.ref.read(searchNotifierProvider.notifier).emptySearchGames();
     _focusNode.unfocus();
+  }
+
+  void _navToSearchResults() {
+    Navigator.of(context).pushNamed('/search/results', arguments: widget.searchController.text);
   }
 
   @override
@@ -238,9 +249,11 @@ class _AutoCompleteSearchBarState extends State<AutoCompleteSearchBar> {
             ),
             filled: true,
             fillColor: AppColor.purple30,
-            prefixIcon: const Icon(
-              Icons.search,
-              color: Colors.white,
+            prefixIcon: IconButton(
+              icon : const Icon(
+                  Icons.search
+              ),
+              onPressed: widget.searchController.text != '' ? _navToSearchResults : null,
             ),
             suffixIcon: widget.searchController.text.isNotEmpty
                 ? IconButton(

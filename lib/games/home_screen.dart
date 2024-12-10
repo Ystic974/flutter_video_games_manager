@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:video_games_manager_flutter/app/widgets/app_bottom_nav_bar.dart';
+import '../api/api_service.dart';
 import '../api/model/games.dart';
 import 'game_notifier.dart';
 
@@ -43,6 +45,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: AppBottomNavBar(currentIndex: 0),
         body: SingleChildScrollView(
           child: Center(
             child: Column(

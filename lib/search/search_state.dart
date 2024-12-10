@@ -22,6 +22,12 @@ class SearchState extends Equatable {
     );
   }
 
+  SearchState setLoading(bool isLoading) {
+    return _copyWith(
+      isLoading: isLoading,
+    );
+  }
+
 
   SearchState _copyWith({
     bool? isLoading,
@@ -38,5 +44,12 @@ class SearchState extends Equatable {
     isLoading,
     searchResults,
   ];
+
+  SearchState addToSearchResults(List<Game> results) {
+    return _copyWith(
+      searchResults: [...searchResults ?? [], ...results],
+      isLoading: false,
+    );
+  }
 
 }
