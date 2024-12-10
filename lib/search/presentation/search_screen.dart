@@ -314,6 +314,11 @@ class _AutoCompleteSearchBarState extends State<AutoCompleteSearchBar> {
                                     ),
                               title: Text(game.name),
                               onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  '/game_details',
+                                  arguments: game.id,
+                                );
                                 debugPrint('Game selected: ${game.name}');
                               },
                             ),
