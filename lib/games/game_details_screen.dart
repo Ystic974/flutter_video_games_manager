@@ -5,6 +5,7 @@ import 'package:html_unescape/html_unescape.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../generated/assets.dart';
+import '../ressources/app_color.dart';
 import '../utils/asset_svg_finder.dart';
 import 'game_notifier.dart';
 
@@ -60,179 +61,194 @@ class _GameDetailsPageState extends ConsumerState<GameDetailsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Game Details"),
+        title: const Text("Game Details", style: TextStyle(color: Colors.white)),
         centerTitle: true,
+        backgroundColor: AppColor.purple50,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (screenshots != null && screenshots.isNotEmpty)
-              SizedBox(
-                height: 250,
-                child: PageView.builder(
-                  controller: PageController(),
-                  itemCount: screenshots.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 250,
-                      child: Image.network(
-                        screenshots[index].imageURL!,
-                        fit: BoxFit.cover,
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      (loadingProgress.expectedTotalBytes ?? 1)
-                                  : null,
-                            ),
-                          );
-                        },
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Center(
-                            child: Text("Failed to load image"),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
-              )
-            else
-              const Center(
-                child: Text("No screenshots available"),
-              ),
-            Row(
-              children: [
-                ...arrayPlatforms.map(
-                  (platformIcon) => Padding(
-                    padding: EdgeInsets.all(4.0),
-                    child: AppSvgAsset(
-                      platformIcon,
-                      width: 30,
-                      height: 30,
-                      color: Colors.black,
-                      ),
-                    // Icon(
-                    //     IconData(platformIcon, fontFamily: 'MaterialIcons'),
-                    //     size: 30.0),
-                    // ),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: BoxDecoration(gradient: AppColor.blackPurpleGradient),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (screenshots != null && screenshots.isNotEmpty)
+                SizedBox(
+                  height: 250,
+                  child: PageView.builder(
+                    controller: PageController(),
+                    itemCount: screenshots.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 250,
+                        child: Image.network(
+                          screenshots[index].imageURL!,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        (loadingProgress.expectedTotalBytes ?? 1)
+                                    : null,
+                              ),
+                            );
+                          },
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Center(
+                              child: Text("Failed to load image"),
+                            );
+                          },
+                        ),
+                      );
+                    },
                   ),
+                )
+              else
+                const Center(
+                  child: Text("No screenshots available"),
                 ),
-                ...arrayPlatformsText.map(
-                  (platformText) => Padding(
-                    padding: EdgeInsets.all(4.0),
-                    child:
-                        Text(platformText, style: TextStyle(color: Colors.red)),
-                  ),
-                ),
-              ],
-            ),
-            Text(
-              gameSingle?.name ?? "",
-              style: Theme.of(context).textTheme.headlineLarge,
-            ),
-            const SizedBox(height: 20.0),
-            Text("Description", style: Theme.of(context).textTheme.headlineSmall),
-
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  isDescriptionExpanded = !isDescriptionExpanded;
-                });
-              },
-              child: Text.rich(
-                TextSpan(
+                Padding(
+                padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextSpan(
-                      text: isDescriptionExpanded || cleanDescription.length < DESC_LENGTH_LIMIT
-                        ? cleanDescription
-                        : truncatedDescription,
+                    Row(
+                      children: [
+                        ...arrayPlatforms.map(
+                          (platformIcon) => Padding(
+                            padding: EdgeInsets.all(4.0),
+                            child: AppSvgAsset(
+                              platformIcon,
+                              width: 30,
+                              height: 30,
+                              color: Colors.white,
+                              ),
+                          ),
+                        ),
+                        ...arrayPlatformsText.map(
+                          (platformText) => Padding(
+                            padding: EdgeInsets.all(4.0),
+                            child:
+                                Text(platformText, style: TextStyle(color: Colors.white)),
+                          ),
+                        ),
+                      ],
                     ),
-                    if (!isDescriptionExpanded && cleanDescription.length >= DESC_LENGTH_LIMIT)
-                      const TextSpan(
-                        text: " SEE MORE",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                    Text(
+                      gameSingle?.name ?? "",
+                      style: Theme.of(context).textTheme.headlineLarge?.copyWith(color: Colors.white),
+                    ),
+                    const SizedBox(height: 20.0),
+                    Text("Description", style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.white)),
+
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isDescriptionExpanded = !isDescriptionExpanded;
+                        });
+                      },
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: isDescriptionExpanded || cleanDescription.length < DESC_LENGTH_LIMIT
+                                ? cleanDescription
+                                : truncatedDescription,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            if (!isDescriptionExpanded && cleanDescription.length >= DESC_LENGTH_LIMIT)
+                              const TextSpan(
+                                text: " SEE MORE",
+                                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                              ),
+                          ],
+                        ),
                       ),
+                    ),
+                    const SizedBox(height: 20.0),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Genre", style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.white)),
+                              if (gameSingle?.genres != null && gameSingle!.genres!.isNotEmpty)
+                                ...gameSingle.genres!.take(3).map((genre) => Text(genre.name, style: const TextStyle(color: Colors.white)))
+                              else
+                                const Text("N/A", style: TextStyle(color: Colors.white)),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Release date", style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.white)),
+                              Text(gameSingle?.released ?? "N/A", style: const TextStyle(color: Colors.white)),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10.0),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Developer", style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.white)),
+                              if (devTeam != null && devTeam.isNotEmpty)
+                                ...devTeam.take(3).map((developer) =>
+                                    Text(developer.name, style: const TextStyle(color: Colors.white)),
+                                )
+                              else
+                                const Text("N/A", style: TextStyle(color: Colors.white)),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Publisher", style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.white)),
+                              if (gameSingle?.publishers != null && gameSingle!.publishers!.isNotEmpty)
+                                ...gameSingle.publishers!.take(3).map((publisher) =>
+                                    Text(publisher.name, style: const TextStyle(color: Colors.white)),
+                                )
+                              else
+                                const Text("N/A", style: TextStyle(color: Colors.white)),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20.0),
+                    // Text("Website", style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.white)),
+                    if (gameSingle?.website != "")
+                      LinkButton(
+                        label: "Website",
+                        icon: true, iconColor: Colors.white,
+                        url: gameSingle?.website,
+                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.white)
+                      )
                   ],
                 ),
               ),
-            ),
-            const SizedBox(height: 20.0),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Genre", style: Theme.of(context).textTheme.headlineSmall),
-                      if (gameSingle?.genres != null && gameSingle!.genres!.isNotEmpty)
-                        ...gameSingle.genres!.take(3).map((genre) => Text(genre.name))
-                      else
-                        const Text("N/A"),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Release date", style: Theme.of(context).textTheme.headlineSmall),
-                      Text(gameSingle?.released ?? "N/A"),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10.0),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Developer", style: Theme.of(context).textTheme.headlineSmall),
-                      if (devTeam != null && devTeam.isNotEmpty)
-                        ...devTeam.take(3).map((developer) =>
-                            Text(developer.name),
-                        )
-                      else
-                        const Text("N/A"),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Publisher", style: Theme.of(context).textTheme.headlineSmall),
-                      if (gameSingle?.publishers != null && gameSingle!.publishers!.isNotEmpty)
-                        ...gameSingle.publishers!.take(3).map((publisher) =>
-                            Text(publisher.name),
-                        )
-                      else
-                        const Text("N/A"),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20.0),
-            Text("Website", style: Theme.of(context).textTheme.headlineSmall),
-            if (gameSingle?.website != "")
-              LinkButton("Voir plus", true, gameSingle?.website)
-            else
-              const Text("Unknown"),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -242,8 +258,10 @@ class _GameDetailsPageState extends ConsumerState<GameDetailsPage> {
 class LinkButton extends StatelessWidget {
   final String label;
   final bool icon;
+  final Color? iconColor;
   final String? url;
-  const LinkButton(this.label, this.icon, this.url, {Key? key}) : super(key: key);
+  final TextStyle? style;
+  const LinkButton({ required this.label, required this.icon, this.iconColor, this.url, this.style, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -258,12 +276,10 @@ class LinkButton extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextStyle(
-              decoration: TextDecoration.underline,
-            ),
+            style: style
           ),
-          SizedBox(width: 10),
-          if (icon) Icon(Icons.open_in_new),
+          const SizedBox(width: 10),
+          if (icon) Icon(Icons.open_in_new, color: iconColor),
         ],
       ),
     );

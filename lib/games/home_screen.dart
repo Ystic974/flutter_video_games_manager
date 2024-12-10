@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:video_games_manager_flutter/app/widgets/app_bottom_nav_bar.dart';
 import '../api/api_service.dart';
 import '../api/model/games.dart';
+import '../ressources/app_color.dart';
 import 'game_notifier.dart';
 
 class MyHomePage extends StatefulHookConsumerWidget {
@@ -46,57 +47,67 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: AppBottomNavBar(currentIndex: 0),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (hightlightGame == null)
-                  const CircularProgressIndicator()
-                else
-                  HighlightedGameCard(
-                    dominantColor: dominantColor ?? Colors.purple,
-                    mutedColor: mutedColor ?? Colors.purpleAccent,
-                    vibrantColor: vibrantColor ?? Colors.white,
-                    highlightedGame: hightlightGame,
-                    isInWishlist: false,
-                    addToWishlist: () {
-                      //ref.read(gameNotifierProvider.notifier).addToWishlist(games.first.id);
-                    },
-                    removeFromWishlist: () {
-                      //ref.read(gameNotifierProvider.notifier).removeFromWishlist(games.first.id);
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: BoxDecoration(gradient: AppColor.blackPurpleGradient),
+          child: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (hightlightGame == null)
+                    const CircularProgressIndicator()
+                  else
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
+                      child: HighlightedGameCard(
+                        dominantColor: dominantColor ?? Colors.purple,
+                        mutedColor: mutedColor ?? Colors.purpleAccent,
+                        vibrantColor: vibrantColor ?? Colors.white,
+                        highlightedGame: hightlightGame,
+                        isInWishlist: false,
+                        addToWishlist: () {
+                          // TODO
+                          //ref.read(gameNotifierProvider.notifier).addToWishlist(games.first.id);
+                        },
+                        removeFromWishlist: () {
+                          // TODO
+                          //ref.read(gameNotifierProvider.notifier).removeFromWishlist(games.first.id);
+                        },
+                      ),
+                    ),
+                  Carousel(
+                    tagName: "Trendy",
+                    games: games,
+                    getMoreGames: (currentSize) {
+                      ref.read(gameNotifierProvider.notifier).getGames(
+                        currentSize
+                      );
                     },
                   ),
-                Carousel(
-                  tagName: "Trendy",
-                  games: games,
-                  getMoreGames: (currentSize) {
-                    ref.read(gameNotifierProvider.notifier).getGames(
-                      currentSize
-                    );
-                  },
-                ),
-                Carousel(
-                  tagName: tag1 == "" ? "Tag 1" : tag1,
-                  games: games2,
-                  getMoreGames: (currentSize) {
-                    ref.read(gameNotifierProvider.notifier).getGamesByTag(
-                      currentSize,
-                      GameNotifier.tag1,
-                    );
-                  },
-                ),
-                Carousel(
-                  tagName: tag2 == "" ? "Tag 2" : tag2,
-                  games: games3,
-                  getMoreGames: (currentSize) {
-                    ref.read(gameNotifierProvider.notifier).getGamesByTag(
-                      currentSize,
-                      GameNotifier.tag2,
-                    );
-                  },
-                ),
-              ],
+                  Carousel(
+                    tagName: tag1 == "" ? "Tag 1" : tag1,
+                    games: games2,
+                    getMoreGames: (currentSize) {
+                      ref.read(gameNotifierProvider.notifier).getGamesByTag(
+                        currentSize,
+                        GameNotifier.tag1,
+                      );
+                    },
+                  ),
+                  Carousel(
+                    tagName: tag2 == "" ? "Tag 2" : tag2,
+                    games: games3,
+                    getMoreGames: (currentSize) {
+                      ref.read(gameNotifierProvider.notifier).getGamesByTag(
+                        currentSize,
+                        GameNotifier.tag2,
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -135,7 +146,7 @@ class Carousel extends StatelessWidget {
           child: Text(
             tagName,
             style: const TextStyle(
-              color: Colors.black, // TODO
+              color: Colors.white, // TODO
               fontSize: 25,
             ),
           ),
@@ -261,46 +272,55 @@ class HighlightedGameCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Game Image
-            Container(
-              width: double.infinity,
-              height: 380,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.green, // Fallback color
-              ),
-              child: Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: highlightedGame.backgroundImage != null
-                        ? Image.network(
-                      highlightedGame.backgroundImage!,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
-                    )
-                        : const Placeholder(),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: 50,
-                      width: double.infinity,
-                      color: dominantColor.withOpacity(0.9),
-                      child: Center(
-                        child: Text(
-                          highlightedGame.name,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: vibrantColor,
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  '/game_details',
+                  arguments: highlightedGame.id,
+                );
+              },
+              child: Container(
+                width: double.infinity,
+                height: 380,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.green, // Fallback color
+                ),
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: highlightedGame.backgroundImage != null
+                          ? Image.network(
+                        highlightedGame.backgroundImage!,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
+                      )
+                          : const Placeholder(),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: 50,
+                        width: double.infinity,
+                        color: dominantColor.withOpacity(0.9),
+                        child: Center(
+                          child: Text(
+                            highlightedGame.name,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: vibrantColor,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 8),
