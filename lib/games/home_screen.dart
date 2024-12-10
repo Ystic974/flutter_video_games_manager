@@ -1,30 +1,25 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:video_games_manager_flutter/app/widgets/app_bottom_nav_bar.dart';
 import '../api/api_service.dart';
 import '../api/model/games.dart';
 import 'game_notifier.dart';
-import 'game_repository.dart';
 
 class MyHomePage extends StatefulHookConsumerWidget {
   const MyHomePage({super.key});
-
-
   @override
   ConsumerState<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
-  int _counter = 0;
-
-  late List<Game>? games;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(gameNotifierProvider.notifier).getGames(1);
+      ref.read(gameNotifierProvider.notifier).getGames(0);
+      ref.read(gameNotifierProvider.notifier).getGamesByTag(1, GameNotifier.tag1);
+      ref.read(gameNotifierProvider.notifier).getGamesByTag(2, GameNotifier.tag2);
       ref.read(gameNotifierProvider.notifier).getHighlightedGame();
       ref.read(gameNotifierProvider.notifier).getTagDetails(1, int.parse(GameNotifier.tag1));
       ref.read(gameNotifierProvider.notifier).getTagDetails(2, int.parse(GameNotifier.tag2));
@@ -34,12 +29,19 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-    final games = ref.watch(gameNotifierProvider.select((value) => value.games));
     final hightlightGame = ref.watch(gameNotifierProvider.select((value) => value.hightlightGame));
+    final games = ref.watch(gameNotifierProvider.select((value) => value.games));
+    final games2 = ref.watch(gameNotifierProvider.select((value) => value.games2));
+    final games3 = ref.watch(gameNotifierProvider.select((value) => value.games3));
+
     final tag1 = ref.watch(gameNotifierProvider.select((value) => value.tag1));
     final tag2 = ref.watch(gameNotifierProvider.select((value) => value.tag2));
     final genre = ref.watch(gameNotifierProvider.select((value) => value.genre));
+
+    final dominantColor = ref.watch(gameNotifierProvider.select((value) => value.dominantColor));
+    final mutedColor = ref.watch(gameNotifierProvider.select((value) => value.mutedColor));
+    final vibrantColor = ref.watch(gameNotifierProvider.select((value) => value.vibrantColor));
+
 
     return SafeArea(
       child: Scaffold(
@@ -53,9 +55,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   const CircularProgressIndicator()
                 else
                   HighlightedGameCard(
-                    dominantColor: Colors.purple,
-                    mutedColor: Colors.purpleAccent,
-                    vibrantColor: Colors.white,
+                    dominantColor: dominantColor ?? Colors.purple,
+                    mutedColor: mutedColor ?? Colors.purpleAccent,
+                    vibrantColor: vibrantColor ?? Colors.white,
                     highlightedGame: hightlightGame,
                     isInWishlist: false,
                     addToWishlist: () {
@@ -73,34 +75,25 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       currentSize
                     );
                   },
-                  onNavigateToGameDetails: (gameId) {
-                    //ref.read(gameNotifierProvider.notifier).navigateToGameDetails(gameId);
-                  },
                 ),
                 Carousel(
                   tagName: tag1 == "" ? "Tag 1" : tag1,
-                  games: games,
+                  games: games2,
                   getMoreGames: (currentSize) {
                     ref.read(gameNotifierProvider.notifier).getGamesByTag(
                       currentSize,
                       GameNotifier.tag1,
                     );
                   },
-                  onNavigateToGameDetails: (gameId) {
-                    //ref.read(gameNotifierProvider.notifier).navigateToGameDetails(gameId);
-                  },
                 ),
                 Carousel(
                   tagName: tag2 == "" ? "Tag 2" : tag2,
-                  games: games,
+                  games: games3,
                   getMoreGames: (currentSize) {
                     ref.read(gameNotifierProvider.notifier).getGamesByTag(
                       currentSize,
                       GameNotifier.tag2,
                     );
-                  },
-                  onNavigateToGameDetails: (gameId) {
-                    //ref.read(gameNotifierProvider.notifier).navigateToGameDetails(gameId);
                   },
                 ),
               ],
@@ -116,14 +109,12 @@ class Carousel extends StatelessWidget {
   final String tagName;
   final List<Game> games;
   final Function(int currentSize) getMoreGames;
-  final Function(int gameId) onNavigateToGameDetails;
 
   const Carousel({
     Key? key,
     required this.tagName,
     required this.games,
     required this.getMoreGames,
-    required this.onNavigateToGameDetails,
   }) : super(key: key);
 
   @override
@@ -158,7 +149,6 @@ class Carousel extends StatelessWidget {
             itemBuilder: (context, index) {
               return CarouselItem(
                 game: games[index],
-                onNavigateToGameDetails: onNavigateToGameDetails,
               );
             },
           ),
@@ -170,20 +160,21 @@ class Carousel extends StatelessWidget {
 
 class CarouselItem extends StatelessWidget {
   final Game game;
-  final Function(int gameId) onNavigateToGameDetails;
 
   const CarouselItem({
     Key? key,
     required this.game,
-    required this.onNavigateToGameDetails,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onNavigateToGameDetails(game.id);
-        //game.addToOwned(); // Assuming Game class has a method to add itself to owned.
+        Navigator.pushNamed(
+            context,
+            '/game_details',
+            arguments: game.id,
+        );
       },
       child: Container(
         margin: const EdgeInsets.all(8.0),

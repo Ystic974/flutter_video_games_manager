@@ -59,71 +59,71 @@ class GameSingle {
     final String slug;
     final String name;
     @JsonKey(name: 'name_original')
-    final String nameOriginal;
-    final String description;
-    final int metacritic;
-    final String released;
-    final List<Genre> genres;
-    final List<Tag> tags;
-    final List<Publisher> publishers;
-    final List<Developer> developers;
-    final bool tba;
-    final String updated;
+    final String? nameOriginal;
+    final String? description;
+    final int? metacritic;
+    final String? released;
+    final List<Genre>? genres;
+    final List<Tag>? tags;
+    final List<Publisher>? publishers;
+    final List<Developer>? developers;
+    final bool? tba;
+    final String? updated;
     @JsonKey(name: 'background_image')
-    final String backgroundImageURL;
+    final String? backgroundImageURL;
     @JsonKey(name: 'background_image_additional')
-    final String backgroundImageAdditionalURL;
-    final String website;
-    final num rating;
+    final String? backgroundImageAdditionalURL;
+    final String? website;
+    final num? rating;
     @JsonKey(name: 'rating_top')
-    final int ratingTop;
-    final List<Rating> ratings;
-    final Map<String, dynamic> reactions; // Assuming a flexible map
-    final int added;
+    final int? ratingTop;
+    final List<Rating>? ratings;
+    final Map<String, dynamic>? reactions; // Assuming a flexible map
+    final int? added;
     @JsonKey(name: 'added_by_status')
-    final AddedByStatus addedByStatus;
-    final int playtime;
+    final AddedByStatus? addedByStatus;
+    final int? playtime;
     @JsonKey(name: 'screenshots_count')
-    final int screenshotsCount;
+    final int? screenshotsCount;
     @JsonKey(name: 'movies_count')
-    final int moviesCount;
+    final int? moviesCount;
     @JsonKey(name: 'creators_count')
-    final int creatorsCount;
+    final int? creatorsCount;
     @JsonKey(name: 'achievements_count')
-    final int achievementsCount;
+    final int? achievementsCount;
     @JsonKey(name: 'parent_achievements_count')
-    final int parentAchievementsCount;
+    final int? parentAchievementsCount;
     @JsonKey(name: 'reddit_url')
-    final String redditURL;
+    final String? redditURL;
     @JsonKey(name: 'reddit_name')
-    final String redditName;
+    final String? redditName;
     @JsonKey(name: 'reddit_description')
-    final String redditDescription;
+    final String? redditDescription;
     @JsonKey(name: 'reddit_logo')
-    final String redditLogoURL;
+    final String? redditLogoURL;
     @JsonKey(name: 'reddit_count')
-    final int redditCount;
+    final int? redditCount;
     @JsonKey(name: 'twitch_count')
-    final String twitchCount;
+    final int? twitchCount;
     @JsonKey(name: 'youtube_count')
-    final String youtubeCount;
+    final int? youtubeCount;
     @JsonKey(name: 'reviews_text_count')
-    final String reviewsTextCount;
+    final int? reviewsTextCount;
     @JsonKey(name: 'ratings_count')
-    final int ratingsCount;
+    final int? ratingsCount;
     @JsonKey(name: 'suggestions_count')
-    final int suggestionsCount;
+    final int? suggestionsCount;
     @JsonKey(name: 'alternative_names')
-    final List<String> alternativeNames;
+    final List<String?>? alternativeNames;
     @JsonKey(name: 'metacritic_url')
-    final String metacriticURL;
+    final String? metacriticURL;
     @JsonKey(name: 'parents_count')
-    final int parentsCount;
+    final int? parentsCount;
     @JsonKey(name: 'additions_count')
-    final int additionsCount;
+    final int? additionsCount;
     @JsonKey(name: 'game_series_count')
-    final int gameSeriesCount;
-    final List<PlatformParentSingle> platforms;
+    final int? gameSeriesCount;
+    final List<PlatformParentSingle>? platforms;
 
     GameSingle({
         required this.id,
@@ -180,15 +180,15 @@ class GameSingle {
 @JsonSerializable()
 class Rating {
     final int id;
-    final String title;
-    final int count;
-    final double percent;
+    final String? title;
+    final int? count;
+    final double? percent;
 
     Rating({
         required this.id,
-        required this.title,
-        required this.count,
-        required this.percent,
+        this.title,
+        this.count,
+        this.percent,
     });
 
     factory Rating.fromJson(Map<String, dynamic> json) => _$RatingFromJson(json);
@@ -196,26 +196,44 @@ class Rating {
 }
 
 @JsonSerializable()
-class AddedByStatus {
+class ScreenShot {
     final int id;
-    final String title;
-    final int count;
-    final double percent;
+    @JsonKey(name: 'image')
+    final String? imageURL;
+    final bool? hidden;
+    final int? width;
+    final int? height;
 
-    AddedByStatus({
+    ScreenShot({
         required this.id,
-        required this.title,
-        required this.count,
-        required this.percent,
+        this.imageURL,
+        this.hidden,
+        this.width,
+        this.height,
     });
 
-    factory AddedByStatus.fromJson(Map<String, dynamic> json) => _$AddedByStatusFromJson(json);
-    Map<String, dynamic> toJson() => _$AddedByStatusToJson(this);
+    factory ScreenShot.fromJson(Map<String, dynamic> json) => _$ScreenShotFromJson(json);
+    Map<String, dynamic> toJson() => _$ScreenShotToJson(this);
+}
+
+
+@JsonSerializable()
+class ShortScreenshot {
+    final int id;
+    final String? image;
+
+    ShortScreenshot({
+        required this.id,
+        this.image,
+    });
+
+    factory ShortScreenshot.fromJson(Map<String, dynamic> json) => _$ShortScreenshotFromJson(json);
+    Map<String, dynamic> toJson() => _$ShortScreenshotToJson(this);
 
 }
 
 @JsonSerializable()
-class ShortScreenshot {
+class AddedByStatus {
     final int? yet;
     final int? owned;
     final int? beaten;
@@ -223,7 +241,7 @@ class ShortScreenshot {
     final int? dropped;
     final int? playing;
 
-    ShortScreenshot({
+    AddedByStatus({
         required this.yet,
         required this.owned,
         required this.beaten,
@@ -232,7 +250,32 @@ class ShortScreenshot {
         required this.playing,
     });
 
-    factory ShortScreenshot.fromJson(Map<String, dynamic> json) => _$ShortScreenshotFromJson(json);
-    Map<String, dynamic> toJson() => _$ShortScreenshotToJson(this);
+    factory AddedByStatus.fromJson(Map<String, dynamic> json) => _$AddedByStatusFromJson(json);
+    Map<String, dynamic> toJson() => _$AddedByStatusToJson(this);
 
+}
+
+@JsonSerializable()
+class GamePersonList {
+    final int id;
+    final String name;
+    final String slug;
+    @JsonKey(name: 'image')
+    final String? imageURL;
+    @JsonKey(name: 'image_background')
+    final String? imageBackground;
+    @JsonKey(name: 'games_count')
+    final int? gameCount;
+
+    GamePersonList({
+        required this.id,
+        required this.name,
+        required this.slug,
+        required this.imageURL,
+        required this.imageBackground,
+        required this.gameCount,
+    });
+
+    factory GamePersonList.fromJson(Map<String, dynamic> json) => _$GamePersonListFromJson(json);
+    Map<String, dynamic> toJson() => _$GamePersonListToJson(this);
 }

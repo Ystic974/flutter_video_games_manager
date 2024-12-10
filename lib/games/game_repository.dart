@@ -1,14 +1,11 @@
-
 import 'dart:async';
 
 import 'package:injectable/injectable.dart';
-import 'package:video_games_manager_flutter/api/params/list_games_params.dart';
 
 import '../api/api_service.dart';
 import '../api/model/games.dart';
 import '../api/model/genre.dart';
 import '../api/model/tag.dart';
-import '../api/params/details_game_params.dart';
 import '../api/rawg_data.dart';
 
 @injectable
@@ -105,6 +102,24 @@ class GameRepository {
             return result.results.first;
         } catch (e) {
             throw AsyncError(e, StackTrace.empty);
+        }
+    }
+
+    Future<RawgData<List<ScreenShot>>> getGameScreenshots(int gameId) {
+        try {
+            final result = _apiService.getGameScreenshots(gameId: gameId.toString());
+            return result;
+        } catch (e) {
+            throw AsyncError(e, StackTrace.empty);
+        }
+    }
+
+    Future<RawgData<List<GamePersonList>>> getGameDev(int gameId) {
+        try {
+          final result = _apiService.getListOfIndividualCreators(gameId: gameId.toString());
+          return result;
+        } catch (e) {
+          throw AsyncError(e, StackTrace.empty);
         }
     }
 }

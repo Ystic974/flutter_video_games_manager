@@ -10,10 +10,7 @@ import 'package:video_games_manager_flutter/search/presentation/search_result_sc
 import 'package:video_games_manager_flutter/search/presentation/search_screen.dart';
 import 'package:video_games_manager_flutter/search/utils/search_args.dart';
 
-import 'api/api_service.dart';
-import 'api/model/games.dart';
-import 'api/params/list_games_params.dart';
-import 'api/rawg_data.dart';
+import 'games/game_details_screen.dart';
 import 'firebase_options.dart';
 import 'games/home_screen.dart';
 
@@ -45,6 +42,8 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const MyHomePage(),
         '/search': (context) => const SearchScreen(),
         '/search/results': (context) => SearchResultScreen(args: ModalRoute.of(context)!.settings.arguments as SearchArguments),        //TODO
+        '/game_details': (context) => GameDetailsPage(gameId: ModalRoute.of(context)!.settings.arguments as int),
+        //TODO
         //'/profile' : (context) => const ProfileScreen(),
         '/login': (context) =>  const LoginScreen(),
         '/signup': (context) => const SignupScreen(),
