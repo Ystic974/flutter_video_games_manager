@@ -196,6 +196,28 @@ class Rating {
 }
 
 @JsonSerializable()
+class ScreenShot {
+    final int id;
+    @JsonKey(name: 'image')
+    final String? imageURL;
+    final bool? hidden;
+    final int? width;
+    final int? height;
+
+    ScreenShot({
+        required this.id,
+        this.imageURL,
+        this.hidden,
+        this.width,
+        this.height,
+    });
+
+    factory ScreenShot.fromJson(Map<String, dynamic> json) => _$ScreenShotFromJson(json);
+    Map<String, dynamic> toJson() => _$ScreenShotToJson(this);
+}
+
+
+@JsonSerializable()
 class ShortScreenshot {
     final int id;
     final String? image;
@@ -231,4 +253,29 @@ class AddedByStatus {
     factory AddedByStatus.fromJson(Map<String, dynamic> json) => _$AddedByStatusFromJson(json);
     Map<String, dynamic> toJson() => _$AddedByStatusToJson(this);
 
+}
+
+@JsonSerializable()
+class GamePersonList {
+    final int id;
+    final String name;
+    final String slug;
+    @JsonKey(name: 'image')
+    final String? imageURL;
+    @JsonKey(name: 'image_background')
+    final String? imageBackground;
+    @JsonKey(name: 'games_count')
+    final int? gameCount;
+
+    GamePersonList({
+        required this.id,
+        required this.name,
+        required this.slug,
+        required this.imageURL,
+        required this.imageBackground,
+        required this.gameCount,
+    });
+
+    factory GamePersonList.fromJson(Map<String, dynamic> json) => _$GamePersonListFromJson(json);
+    Map<String, dynamic> toJson() => _$GamePersonListToJson(this);
 }

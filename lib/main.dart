@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) => const MyHomePage(),
         '/search': (context) => const SearchScreen(),
-        '/game_details': (context) => const GameDetailsPage(),
+        '/game_details': (context) => GameDetailsPage(gameId: ModalRoute.of(context)!.settings.arguments as int),
         //TODO
         //'/profile' : (context) => const ProfileScreen(),
       },

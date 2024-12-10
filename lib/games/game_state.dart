@@ -15,7 +15,9 @@ class GameState extends Equatable {
     this.games2 = const [],
     this.games3 = const [],
     this.gameSingle = null,
+    this.screenshots = const [],
     this.hightlightGame = null,
+    this.devTeam = null,
     this.tag1 = "",
     this.tag2 = "",
     this.genre = "",
@@ -28,7 +30,9 @@ class GameState extends Equatable {
   final List<Game> games2;
   final List<Game> games3;
   final GameSingle? gameSingle;
+  final List<ScreenShot> screenshots;
   final Game? hightlightGame;
+  final List<GamePersonList>? devTeam;
   final bool isLoading;
   final String tag1;
   final String tag2;
@@ -61,9 +65,21 @@ class GameState extends Equatable {
     );
   }
 
+  GameState gotScreenshots(List<ScreenShot> screenshots) {
+    return _copyWith(
+      screenshots: screenshots,
+    );
+  }
+
   GameState gotHightlightGame(Game hightlightGame) {
     return _copyWith(
       hightlightGame: hightlightGame,
+    );
+  }
+
+  GameState gotDevTeam(List<GamePersonList> devTeam) {
+    return _copyWith(
+      devTeam: devTeam,
     );
   }
 
@@ -112,7 +128,9 @@ class GameState extends Equatable {
     List<Game>? games2,
     List<Game>? games3,
     GameSingle? gameSingle,
+    List<ScreenShot>? screenshots,
     Game? hightlightGame,
+    List<GamePersonList>? devTeam,
     String? tag1,
     String? tag2,
     String? genre,
@@ -124,7 +142,9 @@ class GameState extends Equatable {
       games2: games2 ?? this.games2,
       games3: games3 ?? this.games3,
       gameSingle: gameSingle ?? this.gameSingle,
+      screenshots: screenshots ?? this.screenshots,
       hightlightGame: hightlightGame ?? this.hightlightGame,
+      devTeam: devTeam ?? this.devTeam,
       tag1: tag1 ?? this.tag1,
       tag2: tag2 ?? this.tag2,
       genre: genre ?? this.genre,
@@ -141,7 +161,9 @@ class GameState extends Equatable {
     games2,
     games3,
     gameSingle,
+    screenshots,
     hightlightGame,
+    devTeam,
     tag1,
     tag2,
     genre,

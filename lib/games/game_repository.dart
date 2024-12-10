@@ -104,4 +104,22 @@ class GameRepository {
             throw AsyncError(e, StackTrace.empty);
         }
     }
+
+    Future<RawgData<List<ScreenShot>>> getGameScreenshots(int gameId) {
+        try {
+            final result = _apiService.getGameScreenshots(gameId: gameId.toString());
+            return result;
+        } catch (e) {
+            throw AsyncError(e, StackTrace.empty);
+        }
+    }
+
+    Future<RawgData<List<GamePersonList>>> getGameDev(int gameId) {
+        try {
+          final result = _apiService.getListOfIndividualCreators(gameId: gameId.toString());
+          return result;
+        } catch (e) {
+          throw AsyncError(e, StackTrace.empty);
+        }
+    }
 }

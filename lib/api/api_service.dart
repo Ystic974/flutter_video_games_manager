@@ -75,6 +75,22 @@ abstract class ApiService {
       @Path() int id,
   );
 
+  @GET("/api/games/{game_pk}/screenshots")
+  Future<RawgData<List<ScreenShot>>> getGameScreenshots({
+    @Path("game_pk") required String gameId,
+    @Query("ordering") String? ordering,
+    @Query("page") int? page,
+    @Query("page_size") int? pageSize,
+  });
+
+  @GET("/api/games/{game_pk}/development-team")
+  Future<RawgData<List<GamePersonList>>> getListOfIndividualCreators({
+    @Path("game_pk") required String gameId,
+    @Query("ordering") String? ordering,
+    @Query("page") int? page,
+    @Query("page_size") int? pageSize,
+  });
+
 }
 
 

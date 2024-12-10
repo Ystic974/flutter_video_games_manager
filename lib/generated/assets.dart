@@ -2,9 +2,19 @@
 class Assets {
   Assets._();
 
+  static const String assetsAndroidSvgrepoCom = 'assets/android-svgrepo-com.svg';
+  static const String assetsComputerSvgrepoCom = 'assets/computer-svgrepo-com.svg';
   static const String assetsDiskFps = 'assets/disk_fps.png';
   static const String assetsDiskRpg = 'assets/disk_rpg.png';
   static const String assetsDiskSimu = 'assets/disk_simu.png';
   static const String assetsDiskSport = 'assets/disk_sport.png';
+  static const String assetsIosSvgrepoCom = 'assets/ios-svgrepo-com.svg';
+  static const String assetsIosSvgrepoOutlined = 'assets/ios-svgrepo-outlined.svg';
+  static const String assetsLinuxSvgrepoCom = 'assets/linux-svgrepo-com.svg';
+  static const String assetsMacosSvgrepoCom = 'assets/macos-svgrepo-com.svg';
+  static const String assetsPlaystationSvgrepoCom = 'assets/playstation-svgrepo-com.svg';
+  static const String assetsSwitchFilledSvgrepoCom = 'assets/switch-filled-svgrepo-com.svg';
+  static const String assetsWebSvgrepoCom = 'assets/web-svgrepo-com.svg';
+  static const String assetsXboxSvgrepoCom = 'assets/xbox-svgrepo-com.svg';
 
 }

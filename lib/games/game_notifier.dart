@@ -83,4 +83,14 @@ class GameNotifier extends StateNotifier<GameState> {
     state = state.setColors(colors.first, colors.second, colors.third);
   }
 
+  void getGameScreenshots(int gameId) async {
+    final screenshots = await _gameRepository.getGameScreenshots(gameId);
+    state = state.gotScreenshots(screenshots.results);
+  }
+
+  void getGameDev(int gameId) async {
+    final game = await _gameRepository.getGameDev(gameId);
+    state = state.gotDevTeam(game.results);
+  }
+
 }

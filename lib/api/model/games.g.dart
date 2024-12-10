@@ -181,6 +181,23 @@ Map<String, dynamic> _$RatingToJson(Rating instance) => <String, dynamic>{
       'percent': instance.percent,
     };
 
+ScreenShot _$ScreenShotFromJson(Map<String, dynamic> json) => ScreenShot(
+      id: (json['id'] as num).toInt(),
+      imageURL: json['image'] as String?,
+      hidden: json['hidden'] as bool?,
+      width: (json['width'] as num?)?.toInt(),
+      height: (json['height'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$ScreenShotToJson(ScreenShot instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'image': instance.imageURL,
+      'hidden': instance.hidden,
+      'width': instance.width,
+      'height': instance.height,
+    };
+
 ShortScreenshot _$ShortScreenshotFromJson(Map<String, dynamic> json) =>
     ShortScreenshot(
       id: (json['id'] as num).toInt(),
@@ -211,4 +228,24 @@ Map<String, dynamic> _$AddedByStatusToJson(AddedByStatus instance) =>
       'toplay': instance.toplay,
       'dropped': instance.dropped,
       'playing': instance.playing,
+    };
+
+GamePersonList _$GamePersonListFromJson(Map<String, dynamic> json) =>
+    GamePersonList(
+      id: (json['id'] as num).toInt(),
+      name: json['name'] as String,
+      slug: json['slug'] as String,
+      imageURL: json['image'] as String?,
+      imageBackground: json['image_background'] as String?,
+      gameCount: (json['games_count'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$GamePersonListToJson(GamePersonList instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'slug': instance.slug,
+      'image': instance.imageURL,
+      'image_background': instance.imageBackground,
+      'games_count': instance.gameCount,
     };
