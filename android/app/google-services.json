@@ -1,0 +1,150 @@
+{
+  "project_info": {
+    "project_number": "654053890266",
+    "project_id": "video-games-manager",
+    "storage_bucket": "video-games-manager.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:654053890266:android:1c3724a1c5da8434fcede3",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "654053890266-a80dpfe7kmric8fhrkrmn8hrbd74a96v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "bdf5be8948cd67cbc4f4cf499b635de260e6a60f"
+          }
+        },
+        {
+          "client_id": "654053890266-cj3eqdai3g6o9ea4ud528k3jm83bv6es.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "974cc575d58a1c62a29c31499f1e9b9a5a954a5b"
+          }
+        },
+        {
+          "client_id": "654053890266-27ricn2lqcac9vpjkgh7v195trnldioq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-zG7AAS2qRLUIca9zKhCMiq1wosHjPpY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "654053890266-27ricn2lqcac9vpjkgh7v195trnldioq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "654053890266-qoelac6v8fkclhc0br4pu5ejfnbv0oaj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "fr.alex.eloi.videoGamesManagerFlutter"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:654053890266:android:d5f4aedbf7a95b13fcede3",
+        "android_client_info": {
+          "package_name": "com.videogamesmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "654053890266-08n1emp2dksc8t38nduacbv053vjqf77.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.videogamesmanager",
+            "certificate_hash": "974cc575d58a1c62a29c31499f1e9b9a5a954a5b"
+          }
+        },
+        {
+          "client_id": "654053890266-jtd8rjj8i7k1nr3ihumnpffqn6gvbrr5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.videogamesmanager",
+            "certificate_hash": "bdf5be8948cd67cbc4f4cf499b635de260e6a60f"
+          }
+        },
+        {
+          "client_id": "654053890266-27ricn2lqcac9vpjkgh7v195trnldioq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-zG7AAS2qRLUIca9zKhCMiq1wosHjPpY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "654053890266-27ricn2lqcac9vpjkgh7v195trnldioq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "654053890266-qoelac6v8fkclhc0br4pu5ejfnbv0oaj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "fr.alex.eloi.videoGamesManagerFlutter"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:654053890266:android:3f733d8f700ba1e9fcede3",
+        "android_client_info": {
+          "package_name": "fr.alex.eloi.video_games_manager_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "654053890266-27ricn2lqcac9vpjkgh7v195trnldioq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-zG7AAS2qRLUIca9zKhCMiq1wosHjPpY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "654053890266-27ricn2lqcac9vpjkgh7v195trnldioq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "654053890266-qoelac6v8fkclhc0br4pu5ejfnbv0oaj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "fr.alex.eloi.videoGamesManagerFlutter"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
