@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>654053890266-qoelac6v8fkclhc0br4pu5ejfnbv0oaj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.654053890266-qoelac6v8fkclhc0br4pu5ejfnbv0oaj</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>654053890266-08n1emp2dksc8t38nduacbv053vjqf77.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCDZque8BN5JMpnp5Nu_s9iEHtc88qInPE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>654053890266</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>fr.alex.eloi.videoGamesManagerFlutter</string>
+	<key>PROJECT_ID</key>
+	<string>video-games-manager</string>
+	<key>STORAGE_BUCKET</key>
+	<string>video-games-manager.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:654053890266:ios:4d6251210b9c092afcede3</string>
+</dict>
+</plist>
