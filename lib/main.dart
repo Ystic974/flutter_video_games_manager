@@ -6,6 +6,7 @@ import 'package:video_games_manager_flutter/app/auth/presentation/signup_screen.
 import 'package:video_games_manager_flutter/config/injection.dart';
 import 'package:video_games_manager_flutter/games/game_repository.dart';
 import 'package:video_games_manager_flutter/app/auth/presentation/login_screen.dart';
+import 'package:video_games_manager_flutter/profile/presentation/profile_screen.dart';
 import 'package:video_games_manager_flutter/search/presentation/search_result_screen.dart';
 import 'package:video_games_manager_flutter/search/presentation/search_screen.dart';
 import 'package:video_games_manager_flutter/search/utils/search_args.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         '/search/results': (context) => SearchResultScreen(args: ModalRoute.of(context)!.settings.arguments as SearchArguments),        //TODO
         '/game_details': (context) => GameDetailsPage(gameId: ModalRoute.of(context)!.settings.arguments as int),
         //TODO
-        //'/profile' : (context) => const ProfileScreen(),
+        '/profile' : (context) => const ProfileScreen(),
         '/login': (context) =>  const LoginScreen(),
         '/signup': (context) => const SignupScreen(),
 

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_games_manager_flutter/games/home_screen.dart';
+import 'package:video_games_manager_flutter/profile/presentation/profile_screen.dart';
 import 'package:video_games_manager_flutter/search/presentation/search_screen.dart';
 
 import '../../ressources/app_color.dart';
@@ -31,13 +32,12 @@ class AppBottomNavBar extends StatelessWidget {
               SearchScreen(),
             );
             break;
-          // case 2:
-          //   navigateWithSlide(
-          //     context,
-          //     ProfilePage(),
-          //     slideToLeft: index > currentIndex,
-          //   );
-          //   break;
+          case 2:
+            navigateWithFade(
+              context,
+              ProfileScreen(),
+            );
+            break;
         }
       },
       items: [
