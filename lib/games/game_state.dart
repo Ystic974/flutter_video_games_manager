@@ -62,12 +62,14 @@ class GameState extends Equatable {
   GameState gotGameSingle(GameSingle gameSingle) {
     return _copyWith(
       gameSingle: gameSingle,
+      isLoading: false,
     );
   }
 
   GameState gotScreenshots(List<ScreenShot> screenshots) {
     return _copyWith(
       screenshots: screenshots,
+      isLoading: false,
     );
   }
 
@@ -80,6 +82,7 @@ class GameState extends Equatable {
   GameState gotDevTeam(List<GamePersonList> devTeam) {
     return _copyWith(
       devTeam: devTeam,
+      isLoading: false,
     );
   }
 
@@ -119,6 +122,14 @@ class GameState extends Equatable {
     return _copyWith(
       isLoading: false,
       games: [...games, ...results],
+    );
+  }
+
+  GameState emptyGameDetails() {
+    return _copyWith(
+      gameSingle: null,
+      screenshots: [],
+      devTeam: null,
     );
   }
 
