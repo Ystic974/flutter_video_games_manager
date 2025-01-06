@@ -107,6 +107,18 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
+  Future<void> isAuthenticated() async {
+    final user = _authRepository.getCurrentUser();
+    if (user != null) {
+      state = state.setAuthenticated(
+        isAuthenticated: true,
+        user: user,
+      );
+    } else {
+      state = const AuthState.initial();
+    }
+  }
+
 
 
 }

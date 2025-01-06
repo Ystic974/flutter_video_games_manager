@@ -25,6 +25,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(authNotifierProvider.notifier).isAuthenticated();
+      if(ref.read(authNotifierProvider.select((value) => value.isAuthenticated))){
+        Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+      }
+    });
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -65,7 +77,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ElevatedButton.icon(
                 onPressed: () async {
                   try {
-                    // TODO: Add Google Sign-In logic here
                     await ref.read(authNotifierProvider.notifier).signInWithGoogle();
                     if(ref.read(authNotifierProvider.select((value) => value.isAuthenticated))){
                       Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);

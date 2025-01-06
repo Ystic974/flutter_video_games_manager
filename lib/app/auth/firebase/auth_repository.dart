@@ -29,8 +29,6 @@ class AuthRepository {
     return _firebaseAuth.currentUser;;
   }
 
-
-
   signInWithCredential(AuthCredential credential) {
     return _firebaseAuth.signInWithCredential(credential);
   }
