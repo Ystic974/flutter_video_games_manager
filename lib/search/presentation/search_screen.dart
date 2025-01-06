@@ -22,7 +22,6 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     final searchResults = ref.watch(
       searchNotifierProvider.select((value) => value.searchResults),
     );
-    if (searchResults.isNotEmpty) print(searchResults[0].backgroundImage);
 
     return SafeArea(
       child: Scaffold(
