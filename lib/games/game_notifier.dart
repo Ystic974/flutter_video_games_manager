@@ -42,11 +42,11 @@ class GameNotifier extends StateNotifier<GameState> {
     state = state.gotGameSingle(singleGame);
   }
 
-  void getGamesByTag(int index, String tag) async {
+  void getGamesByTag(int index, String tag, int tagNumber) async {
     if (index == 0) state = state.setLoading(true);
 
     final games = await _gameRepository.getGames(page: (index / 10 + 1).toInt(), pageSize: 10, tags: tag);
-    switch(index) {
+    switch(tagNumber) {
       case 1:
         state = state.gotGames2(games.results);
         break;

@@ -18,10 +18,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(gameNotifierProvider.notifier).getGames(0);
-      ref.read(gameNotifierProvider.notifier).getGamesByTag(1, GameNotifier.tag1);
-      ref.read(gameNotifierProvider.notifier).getGamesByTag(2, GameNotifier.tag2);
       ref.read(gameNotifierProvider.notifier).getHighlightedGame();
+      ref.read(gameNotifierProvider.notifier).getGames(0);
+      ref.read(gameNotifierProvider.notifier).getGamesByTag(1, GameNotifier.tag1, 1);
+      ref.read(gameNotifierProvider.notifier).getGamesByTag(2, GameNotifier.tag2, 2);
       ref.read(gameNotifierProvider.notifier).getTagDetails(1, int.parse(GameNotifier.tag1));
       ref.read(gameNotifierProvider.notifier).getTagDetails(2, int.parse(GameNotifier.tag2));
       ref.read(gameNotifierProvider.notifier).getGenreDetails(int.parse(GameNotifier.genre1));
@@ -93,6 +93,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       ref.read(gameNotifierProvider.notifier).getGamesByTag(
                         currentSize,
                         GameNotifier.tag1,
+                        1
                       );
                     },
                   ),
@@ -103,6 +104,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       ref.read(gameNotifierProvider.notifier).getGamesByTag(
                         currentSize,
                         GameNotifier.tag2,
+                        2
                       );
                     },
                   ),

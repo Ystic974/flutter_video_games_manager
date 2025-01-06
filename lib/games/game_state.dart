@@ -43,19 +43,19 @@ class GameState extends Equatable {
 
   GameState gotGames(List<Game> games) {
     return _copyWith(
-      games: games,
+      games: this.games + games,
     );
   }
 
   GameState gotGames2(List<Game> games2) {
     return _copyWith(
-      games2: games2,
+      games2: this.games2 + games2,
     );
   }
 
   GameState gotGames3(List<Game> games3) {
     return _copyWith(
-      games3: games3,
+      games3: this.games3 + games3,
     );
   }
 
