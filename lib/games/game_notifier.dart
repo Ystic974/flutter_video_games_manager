@@ -33,11 +33,13 @@ class GameNotifier extends StateNotifier<GameState> {
     final from = DateTime.now().subtract(const Duration(days: 90)).toString().split(' ').first;
     final to = DateTime.now().toString().split(' ').first;
 
+    state = state.setLoading(true);
     final games = await _gameRepository.getGames(page: (index / 10 + 1).toInt(), pageSize: 10, dates: "$from,$to");
     state = state.gotGames(games.results);
   }
 
-  void getGameDetails(int id) async{
+  void getGameDetails(int id) async {
+    state = state.setLoading(true);
     final singleGame = await _gameRepository.getGameDetails(id);
     state = state.gotGameSingle(singleGame);
   }
@@ -84,13 +86,19 @@ class GameNotifier extends StateNotifier<GameState> {
   }
 
   void getGameScreenshots(int gameId) async {
+    state = state.setLoading(true);
     final screenshots = await _gameRepository.getGameScreenshots(gameId);
     state = state.gotScreenshots(screenshots.results);
   }
 
   void getGameDev(int gameId) async {
+    state = state.setLoading(true);
     final game = await _gameRepository.getGameDev(gameId);
     state = state.gotDevTeam(game.results);
+  }
+
+  void emptyGameDetails() {
+    state = state.emptyGameDetails();
   }
 
 }
